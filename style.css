@@ -1,0 +1,157 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body
+{
+    background-image: url("img/dust.png");
+}
+
+.whole-box
+{
+    position: relative;
+}
+
+.inner-box
+{
+    position: absolute;
+    left: 0px;
+}
+
+.avatar-frame
+{
+    border: 2px solid #c7b89e;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.avatar
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.name-tag
+{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 45px;
+    /*height: 25px;*/
+    color: #2B3736; 
+    font: 13px Nanum Pen Script; 
+/*    background: #752E23;
+    border: 2px solid #c7b89e;
+    border-radius: 4px;*/
+}
+
+.title-tag
+{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 45px;
+    /*height: 25px;*/
+    color: #2B3736; 
+    font: 10px Herculanum; 
+/*    background: #752E23;
+    border: 2px solid #c7b89e;
+    border-radius: 4px;*/
+}
+
+.detail-box
+{
+    position: absolute;
+    left: 60px;
+    /*margin-left: 120px;*/
+    text-align: left;
+    color: #752E23; 
+    font: bold 12px HanziPen SC; 
+    letter-spacing: -1px;  
+    background: #c7b89e;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    border: 2px solid #752E23;
+    border-radius: 8px;
+}
+
+.interaction-pane
+{
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    width: 300px;
+    height: 250px;
+    
+    background: #f0f0fd;
+    background: rgba(240,240,253,0.80);
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+    -box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.close-button
+{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.top-bar
+{
+    height: 26px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.owner-box
+{
+    position: relative;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.owner-post
+{
+/*    position: absolute;
+    top: 0px;
+    left: 60px;*/
+    float: right;
+    width: 200px;
+    color: #D3B17D;
+    font: 16px Cochin;
+    background: #2B3736;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+html, body, #map-canvas 
+{
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+}
