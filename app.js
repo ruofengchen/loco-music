@@ -1,7 +1,7 @@
 // fake data
 var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"img/cat.jpg", post:"Like cat music", id:"0"}
 var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
-var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"img/puppy.jpg", post:"I just learned to poop music.", id:"2"}
+var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
 var people = {}
 people["0"] = p0
 people["1"] = p1
@@ -33,16 +33,22 @@ function ShowInteractionPane() {
     inDetail = true
     
     $('.interaction-pane').show()
-    var closeBtn = $('.close-button')
     function ClosePane() {
         $('.interaction-pane').hide()
         inDetail = false
     }
-    closeBtn.click(ClosePane)
+    $('.close-button').click(ClosePane)
+
+    $('.like-button').attr('src', 'img/heart_grey.png')
+    function LikePost() {
+        $('.like-button').attr('src', 'img/heart_red.png')
+    }
+    $('.like-button').click(LikePost)
 
     var p = people[this.id]
     $('.owner-avatar').attr('src', p.avatar)
     $('.owner-name').text(p.name)
+    $('.owner-title').text(p.title)
     $('.owner-post').text(p.post)
 }
 

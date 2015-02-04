@@ -41,8 +41,8 @@ body, html, #map-canvas
 {
     width: 100%;
     overflow: auto;
-/*    border: 2px solid #A5BA93;
-    border-radius: 2px;*/
+    border: 2px solid #A5BA93;
+    border-radius: 2px;
 }
 
 .close-button
@@ -67,8 +67,8 @@ body, html, #map-canvas
 .owner-info
 {
     overflow: auto;
-/*    border: 2px solid #752E23;
-    border-radius: 2px;*/
+    border: 2px solid #752E23;
+    border-radius: 2px;
 }
 
 .owner-avatar
@@ -88,10 +88,24 @@ body, html, #map-canvas
     text-align: center;
 }
 
-.owner-post
+.owner-title
+{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.owner-post-container
 {
     margin: 0 auto;
     width: 80%;
+    border: 2px solid #752E23;
+    border-radius: 2px;
+}
+
+.owner-post
+{
+    margin: 0 auto;
     color: #D3B17D;
     font: 16px Cochin;
     background: #2B3736;
@@ -102,4 +116,44 @@ body, html, #map-canvas
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.action-bar-container
+{
+    display: flex;
+    width: 100%;
+    height: 45px;
+    overflow: auto;
+    padding-top: 10px;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
+}
+
+.action-bar
+{
+    display: flex;
+    overflow: auto;
+}
+
+.like-button
+{
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.no-use-pad2
+{
+    width: 10px;
+}
+
+.reply-button
+{
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
 }
