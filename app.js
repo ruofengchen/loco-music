@@ -9,7 +9,7 @@ people["2"] = p2
 
 // generate some random users
 for (var i=0; i<100; i++) {
-    var name = Math.random().toString(35).substring(2, 10);
+    var name = Math.random().toString(35).substring(2, 20);
     var title = Math.random().toString(35).substring(2, 7);
     var zip = Math.floor(Math.random() * 6162) + 90000;
     var post = Math.random().toString(35).substring(2, 10) + ' ' + Math.random().toString(35).substring(2, 10);
@@ -27,107 +27,32 @@ var map;
 var detailedMarker;
 var inDetail = false; // in map or in post
 
-// on-click trigger
-function UpdatePersonDetailInfoBox() {
-    // remove previous detail box first
-    if (detailedMarker) {
-        var theBox = $(detailedMarker.content)
-        theBox.find('.detail-box').remove()
-        theBox.find('.name-tag').hide()
-        theBox.find('.title-tag').hide()
-        detailedMarker.setContent(theBox[0].outerHTML)
-        
-    }
-
-    var box = $(this.content)
-    var id = box.attr('id')
-    
-    var txt_box = GetPersonDetailHTML(people[id])
-    box.append(txt_box)
-    box.find('.name-tag').show()
-    box.find('.title-tag').show()
-
-    this.setContent(box[0].outerHTML)
-    detailedMarker = this
-}
-
 function ShowInteractionPane() {
 
     if (inDetail) return
     inDetail = true
-
-    var box = $('<div></div>')
-    box.addClass('interaction-pane')
-
-    var top_bar = $('<div></div>')
-    top_bar.addClass('top-bar')
-
-    var closeBtn = $('<img></img>')
-    closeBtn.attr('src', 'img/x.png')
-    closeBtn.addClass('close-button')
+    
+    $('.interaction-pane').show()
+    var closeBtn = $('.close-button')
     function ClosePane() {
-        $('.interaction-pane').remove()
+        $('.interaction-pane').hide()
         inDetail = false
     }
     closeBtn.click(ClosePane)
 
-    // owner's box
-    var owner_box = $('<div></div>')
-    owner_box.addClass('owner-box')
-
-    var id = $(this.content).attr('id')
-    var owner_avatar = GetPersonInfoHTML(people[id])
-    owner_avatar.find('.name-tag').show()
-    owner_avatar.find('.title-tag').show()
-    owner_box.append(owner_avatar)
-
-    var owner_post_content = "Some random post. Damn, I don't want to play music, I just want to poop!!"
-    var owner_post = $('<div></div>')
-    owner_post.addClass('owner-post')
-    owner_post.text(owner_post_content)
-    owner_box.append(owner_post)
-
-    top_bar.append(closeBtn)
-    box.append(top_bar)
-    box.append(owner_box)
-
-    $('body').append(box)
+    var p = people[this.id]
+    $('.owner-avatar').attr('src', p.avatar)
+    $('.owner-name').text(p.name)
+    $('.owner-post').text(p.post)
 }
 
 // ui code for avatar
 function GetPersonInfoHTML(p) {
 
-    var box = $('<div></div>')
-    box.addClass('whole-box')
-    box.attr('id', p.id)
-
-    var innerbox = $('<div></div>')
-    innerbox.addClass('inner-box')
-
-    var frame = $('<div></div>')
-    frame.addClass('avatar-frame')
-
     var img = $('<img></img>')
     img.attr('src', p.avatar)
     img.addClass('avatar')
-
-    var nametag = $('<div></div>')
-    nametag.addClass('name-tag')
-    nametag.text(p.name)
-    nametag.hide()
-
-    var titletag = $('<div></div>')
-    titletag.addClass('title-tag')
-    titletag.text(p.title)
-    titletag.hide()
-
-    frame.append(img)
-    innerbox.append(frame)
-    innerbox.append(nametag)
-    innerbox.append(titletag)
-    box.append(innerbox)
-
-    return box
+    return img
 }
 
 // ui code for info box
@@ -140,7 +65,7 @@ function GetPersonDetailHTML(p) {
     return box
 }
 
-function PlaceInfoOnMap(obj, x, y) {
+function PlaceInfoOnMap(obj, x, y, id) {
     var content = obj[0].outerHTML
     var mapCenter = new google.maps.LatLng(x, y)
     var marker = new RichMarker({
@@ -149,6 +74,7 @@ function PlaceInfoOnMap(obj, x, y) {
         draggable: false,
         content: content,
         shadow: '',
+        id: id
     });
     google.maps.event.addListener(marker, 'click', ShowInteractionPane)
 }
@@ -174,7 +100,7 @@ function InitializePeopleData() {
             loc.x = 37.5735 + Math.random() * 2 - 1
             loc.y = -122.0469 + Math.random() * 2 - 1
         }
-        PlaceInfoOnMap(obj, loc.x, loc.y)
+        PlaceInfoOnMap(obj, loc.x, loc.y, k)
     }
 }
 
@@ -190,6 +116,7 @@ $(document).ready(function() {
     function initialize() {
         InitializeGoogleMap()
         InitializePeopleData()
+        $('.interaction-pane').hide()
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })

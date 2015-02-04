@@ -4,97 +4,29 @@
           box-sizing: border-box;
 }
 
-body
+body, html, #map-canvas
 {
-    background-image: url("img/dust.png");
-}
-
-.whole-box
-{
-    position: relative;
-}
-
-.inner-box
-{
-    position: absolute;
-    left: 0px;
-}
-
-.avatar-frame
-{
-    border: 2px solid #c7b89e;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40px;
-    height: 40px;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
+    height: 100%;
+    width: 100%;
 }
 
 .avatar
 {
-    margin-left: auto;
-    margin-right: auto;
     width: 40px;
     height: 40px;
     -webkit-border-radius: 20px;
     border-radius: 20px;
 }
 
-.name-tag
-{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    top: 45px;
-    /*height: 25px;*/
-    color: #2B3736; 
-    font: 13px Nanum Pen Script; 
-/*    background: #752E23;
-    border: 2px solid #c7b89e;
-    border-radius: 4px;*/
-}
-
-.title-tag
-{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    top: 45px;
-    /*height: 25px;*/
-    color: #2B3736; 
-    font: 10px Herculanum; 
-/*    background: #752E23;
-    border: 2px solid #c7b89e;
-    border-radius: 4px;*/
-}
-
-.detail-box
-{
-    position: absolute;
-    left: 60px;
-    /*margin-left: 120px;*/
-    text-align: left;
-    color: #752E23; 
-    font: bold 12px HanziPen SC; 
-    letter-spacing: -1px;  
-    background: #c7b89e;
-    padding-top: 3px;
-    padding-right: 3px;
-    padding-bottom: 3px;
-    padding-left: 3px;
-    border: 2px solid #752E23;
-    border-radius: 8px;
-}
-
 .interaction-pane
 {
+    width: 90%;
+    height: 90%;
     position: fixed;
-    top: 0; left: 0; bottom: 0; right: 0;
-    margin: auto;
-    width: 300px;
-    height: 250px;
-    
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     background: #f0f0fd;
     background: rgba(240,240,253,0.80);
     -moz-border-radius: 8px;
@@ -105,38 +37,61 @@ body
     -box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
 }
 
-.close-button
-{
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-}
-
 .top-bar
 {
-    height: 26px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
+    width: 100%;
+    overflow: auto;
+/*    border: 2px solid #A5BA93;
+    border-radius: 2px;*/
+}
+
+.close-button
+{
+    width: 20px;
+    height: 20px;
 }
 
 .owner-box
 {
-    position: relative;
-    padding-right: 20px;
-    padding-left: 20px;
+    display: flex;
+    width: 100%;
+    overflow: auto;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.owner-info
+{
+    overflow: auto;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
+}
+
+.owner-avatar
+{
+    display: block;
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+}
+
+.owner-name
+{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .owner-post
 {
-/*    position: absolute;
-    top: 0px;
-    left: 60px;*/
-    float: right;
-    width: 200px;
+    margin: 0 auto;
+    width: 80%;
     color: #D3B17D;
     font: 16px Cochin;
     background: #2B3736;
@@ -147,11 +102,4 @@ body
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-}
-
-html, body, #map-canvas 
-{
-    height: 100%;
-    margin: 0px;
-    padding: 0px
 }
