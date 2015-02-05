@@ -45,6 +45,24 @@ function ShowInteractionPane() {
     }
     $('.like-button').click(LikePost)
 
+    function ReplyPost() {
+        var reply_options = ['also recommend Beethoven\' Symphony no.5',
+        'Mahler is much better',
+        'Go ahead to listen to Justin Bieber']
+        for (var i in reply_options) {
+            var reply_option_box = $('<div></div>')
+            reply_option_box.text(reply_options[i])
+            reply_option_box.addClass('reply-option')
+            $('.reply-options-container').append(reply_option_box)
+        }
+        var reply_textbox = $('<input>')
+        reply_textbox.attr('type', 'text')
+        reply_textbox.val('Type your own...')
+        reply_textbox.addClass('reply-textbox')
+        $('.reply-options-container').append(reply_textbox)
+    }
+    $('.reply-button').click(ReplyPost)
+
     var p = people[this.id]
     $('.owner-avatar').attr('src', p.avatar)
     $('.owner-name').text(p.name)

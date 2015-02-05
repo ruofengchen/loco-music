@@ -21,7 +21,7 @@ body, html, #map-canvas
 .interaction-pane
 {
     width: 90%;
-    height: 90%;
+    height: auto;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -146,11 +146,7 @@ body, html, #map-canvas
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
-}
-
-.no-use-pad2
-{
-    width: 10px;
+    margin-right: 5px;
 }
 
 .reply-button
@@ -160,4 +156,62 @@ body, html, #map-canvas
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
+    margin-left: 5px;
+}
+
+.reply-container
+{
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.reply-options-container
+{
+    width: 30%;
+    margin: 0 auto;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
+}
+
+.reply-option
+{
+    width: 100%;
+    margin: 0 auto;
+    /*color: #D3B17D;*/
+    font: 16px Cochin;
+    text-align: center;
+    background: #C48E69;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
+}
+
+.reply-textbox
+{
+    width: 100%;
+    min-height: 80px;
+    margin: 0 auto;
+    font: 16px Cochin;
+    font-style: italic;
+    text-align: center;
+    background-color: #E2BE9F;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+/*    border: 2px solid #752E23;
+    border-radius: 2px;*/
 }
