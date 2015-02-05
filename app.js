@@ -29,39 +29,27 @@ var inDetail = false; // in map or in post
 
 function ShowInteractionPane() {
 
+    $('.interaction-pane').show()
     if (inDetail) return
     inDetail = true
-    
-    $('.interaction-pane').show()
-    function ClosePane() {
-        $('.interaction-pane').hide()
-        inDetail = false
-    }
-    $('.close-button').click(ClosePane)
 
-    $('.like-button').attr('src', 'img/heart_grey.png')
-    function LikePost() {
-        $('.like-button').attr('src', 'img/heart_red.png')
-    }
-    $('.like-button').click(LikePost)
+    $('.flag-confirm').hide()
 
-    function ReplyPost() {
-        var reply_options = ['also recommend Beethoven\' Symphony no.5',
+    var reply_options = ['also recommend Beethoven\' Symphony no.5',
         'Mahler is much better',
         'Go ahead to listen to Justin Bieber']
-        for (var i in reply_options) {
-            var reply_option_box = $('<div></div>')
-            reply_option_box.text(reply_options[i])
-            reply_option_box.addClass('reply-option')
-            $('.reply-options-container').append(reply_option_box)
-        }
-        var reply_textbox = $('<input>')
-        reply_textbox.attr('type', 'text')
-        reply_textbox.val('Type your own...')
-        reply_textbox.addClass('reply-textbox')
-        $('.reply-options-container').append(reply_textbox)
+    for (var i in reply_options) {
+        var reply_option_box = $('<div></div>')
+        reply_option_box.text(reply_options[i])
+        reply_option_box.addClass('reply-option')
+        $('.reply-options-container').append(reply_option_box)
     }
-    $('.reply-button').click(ReplyPost)
+    var reply_textbox = $('<input>')
+    reply_textbox.attr('type', 'text')
+    reply_textbox.val('Type your own...')
+    reply_textbox.addClass('reply-textbox')
+    $('.reply-options-container').append(reply_textbox)
+    $('.reply-options-container').hide()
 
     var p = people[this.id]
     $('.owner-avatar').attr('src', p.avatar)
@@ -128,6 +116,33 @@ function InitializePeopleData() {
     }
 }
 
+function InitializeCallback() {
+    function ClosePane() {
+        $('.interaction-pane').hide()
+        // remove all dynamically generated contents
+        $('.reply-options-container').empty()
+        inDetail = false
+    }
+    $('.close-button').click(ClosePane)
+
+    $('.like-button').attr('src', 'img/heart_grey.png')
+    function LikePost() {
+        $('.like-button').attr('src', 'img/heart_red.png')
+    }
+    $('.like-button').click(LikePost)
+
+    function ReplyPost() {
+        $('.reply-options-container').toggle()
+    }
+    $('.reply-button').click(ReplyPost)
+
+    function Flag() {
+        console.log("here")
+        $('.flag-confirm').toggle()
+    }
+    $('.flag-button').click(Flag)
+}
+
 // function ZoomChanged() {
 //     var zoomLevel = map.getZoom();
 //     console.log(zoomLevel);
@@ -140,6 +155,7 @@ $(document).ready(function() {
     function initialize() {
         InitializeGoogleMap()
         InitializePeopleData()
+        InitializeCallback()
         $('.interaction-pane').hide()
     }
     google.maps.event.addDomListener(window, 'load', initialize);

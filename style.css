@@ -139,7 +139,7 @@ body, html, #map-canvas
     overflow: auto;
 }
 
-.like-button
+.like-button, .reply-button, .flag-button
 {
     width: 30px;
     height: 30px;
@@ -149,14 +149,18 @@ body, html, #map-canvas
     margin-right: 5px;
 }
 
-.reply-button
+.flag-confirm
 {
-    width: 30px;
-    height: 30px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    border-radius: 15px;
-    margin-left: 5px;
+    font: 16px Cochin;
+    text-align: center;
+    background: #DC3023;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .reply-container
