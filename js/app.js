@@ -1,7 +1,7 @@
 // fake data
-var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"img/cat.jpg", post:"Like cat music", id:"0"}
-var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
-var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
+var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"Like cat music", id:"0"}
+var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
+var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
 var people = {}
 people["0"] = p0
 people["1"] = p1
@@ -14,7 +14,7 @@ for (var i=0; i<100; i++) {
     var zip = Math.floor(Math.random() * 6162) + 90000;
     var post = Math.random().toString(35).substring(2, 10) + ' ' + Math.random().toString(35).substring(2, 10);
     var id = Math.random().toString(35).substring(2, 7);
-    var p = {name:name, title:title, zip:zip, avatar:"img/person.jpg", post:post, id:id};
+    var p = {name:name, title:title, zip:zip, avatar:"/img/person.jpg", post:post, id:id};
     people[id] = p;
 }
 
@@ -125,9 +125,9 @@ function InitializeCallback() {
     }
     $('.close-button').click(ClosePane)
 
-    $('.like-button').attr('src', 'img/heart_grey.png')
+    $('.like-button').attr('src', '/img/heart_grey.png')
     function LikePost() {
-        $('.like-button').attr('src', 'img/heart_red.png')
+        $('.like-button').attr('src', '/img/heart_red.png')
     }
     $('.like-button').click(LikePost)
 
