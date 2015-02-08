@@ -8,13 +8,14 @@
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
 
-    $sql = 'SELECT * FROM users';
+    $sql = 'SELECT * FROM users WHERE zip = 94555';
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }
 
+    $users = array();
     while($row = $result->fetch_assoc()){
-        echo json_encode($row);
+        $users[] = $row;
     }
-
+    echo json_encode($users);
 ?>

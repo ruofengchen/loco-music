@@ -103,17 +103,24 @@ function InitializeGoogleMap() {
 }
 
 function InitializePeopleData() {
-    for (var k in people) {
-        var obj = GetPersonInfoHTML(people[k])
-        var loc;
-        if (people[k].zip in zip2loc)
-            loc = zip2loc[people[k].zip]
-        else {
-            loc.x = 37.5735 + Math.random() * 2 - 1
-            loc.y = -122.0469 + Math.random() * 2 - 1
+
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            var users = JSON.parse(req.responseText)
+	    console.log(users)
+	    for (var k in people) {
+                var obj = GetPersonInfoHTML(people[k])
+                if (people[k].zip in zip2loc) {
+                    var loc = zip2loc[people[k].zip]
+                    PlaceInfoOnMap(obj, loc.x, loc.y, k)
+		}
+    	    }
         }
-        PlaceInfoOnMap(obj, loc.x, loc.y, k)
     }
+    req.open('GET', '/php/get_all_users.php', true)
+    req.send()
+
 }
 
 function InitializeCallback() {
@@ -143,32 +150,12 @@ function InitializeCallback() {
     $('.flag-button').click(Flag)
 }
 
-// function ZoomChanged() {
-//     var zoomLevel = map.getZoom();
-//     console.log(zoomLevel);
-//     if (zoomLevel < 10) {
-//         // scale all avatars
-//     }
-// }
-
-function TestPHP() {
-    var req = new XMLHttpRequest()
-    req.onreadystatechange = function() {
-	if (req.status == 200) {
-	    console.log(req.responseText)
-	}
-    }
-    req.open('GET', '/php/get_all_users.php', true)
-    req.send()
-}
-
 $(document).ready(function() {
     function initialize() {
         InitializeGoogleMap()
         InitializePeopleData()
         InitializeCallback()
         $('.interaction-pane').hide()
-	TestPHP()
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })
