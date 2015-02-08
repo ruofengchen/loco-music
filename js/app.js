@@ -3,6 +3,7 @@ var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"L
 var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
 var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
 
+var users = {}
 var map;
 var detailedMarker;
 var inDetail = false; // in map or in post
@@ -31,7 +32,8 @@ function ShowInteractionPane() {
     $('.reply-options-container').append(reply_textbox)
     $('.reply-options-container').hide()
 
-    var p = people[this.id]
+    // TO-DO: read info from db
+    var p = users[this.id]
     $('.owner-avatar').attr('src', p.avatar)
     $('.owner-name').text(p.name)
     $('.owner-title').text(p.title)
@@ -89,7 +91,7 @@ function InitializePeopleData() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            var users = JSON.parse(req.responseText)
+            users = JSON.parse(req.responseText)
 	    for (var id in users) {
 		users[id].avatar = '/img/person.jpg'
                 var obj = GetPersonInfoHTML(users[id])
