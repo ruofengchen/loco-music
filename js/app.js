@@ -151,12 +151,24 @@ function InitializeCallback() {
 //     }
 // }
 
+function TestPHP() {
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+	if (req.status == 200) {
+	    console.log(req.responseText)
+	}
+    }
+    req.open('GET', '/php/get_all_users.php', true)
+    req.send()
+}
+
 $(document).ready(function() {
     function initialize() {
         InitializeGoogleMap()
         InitializePeopleData()
         InitializeCallback()
         $('.interaction-pane').hide()
+	TestPHP()
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })
