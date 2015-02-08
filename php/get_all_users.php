@@ -8,7 +8,7 @@
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
 
-    $sql = 'SELECT * FROM users WHERE zip = 94555';
+    $sql = 'SELECT users.id, zipcodes.log, zipcodes.lat FROM users JOIN zipcodes ON users.zip = zipcodes.zipcode WHERE users.zip = 94555';
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }

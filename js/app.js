@@ -2,26 +2,6 @@
 var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"Like cat music", id:"0"}
 var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
 var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
-var people = {}
-people["0"] = p0
-people["1"] = p1
-people["2"] = p2
-
-// generate some random users
-for (var i=0; i<100; i++) {
-    var name = Math.random().toString(35).substring(2, 20);
-    var title = Math.random().toString(35).substring(2, 7);
-    var zip = Math.floor(Math.random() * 6162) + 90000;
-    var post = Math.random().toString(35).substring(2, 10) + ' ' + Math.random().toString(35).substring(2, 10);
-    var id = Math.random().toString(35).substring(2, 7);
-    var p = {name:name, title:title, zip:zip, avatar:"/img/person.jpg", post:post, id:id};
-    people[id] = p;
-}
-
-var zip2loc = {}
-zip2loc[94403] = {x:37.53, y:-122.3}
-zip2loc[94541] = {x:37.674, y:-122.089}
-zip2loc[94555] = {x:37.572, y:-122.048}
 
 var map;
 var detailedMarker;
@@ -79,7 +59,9 @@ function GetPersonDetailHTML(p) {
 
 function PlaceInfoOnMap(obj, x, y, id) {
     var content = obj[0].outerHTML
-    var mapCenter = new google.maps.LatLng(x, y)
+    x = parseFloat(x) + Math.random() * 0.04 - 0.02
+    y = parseFloat(y) + Math.random() * 0.04 - 0.02
+    var mapCenter = new google.maps.LatLng(parseFloat(x), parseFloat(y))
     var marker = new RichMarker({
         position: mapCenter,
         map: map,
@@ -108,13 +90,10 @@ function InitializePeopleData() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             var users = JSON.parse(req.responseText)
-	    console.log(users)
-	    for (var k in people) {
-                var obj = GetPersonInfoHTML(people[k])
-                if (people[k].zip in zip2loc) {
-                    var loc = zip2loc[people[k].zip]
-                    PlaceInfoOnMap(obj, loc.x, loc.y, k)
-		}
+	    for (var id in users) {
+		users[id].avatar = '/img/person.jpg'
+                var obj = GetPersonInfoHTML(users[id])
+                PlaceInfoOnMap(obj, users[id].lat, users[id].log, id)
     	    }
         }
     }
