@@ -1,7 +1,7 @@
 <?php
     ini_set('display_errors', 'On');
     error_reporting(E_ALL | E_STRICT);
-    $uid = _GET['uid'];
+    $uid = $_GET['uid'];
     $username = 'root';
     $password = 'corvus';
     $conn = new mysqli('localhost', $username, $password, 'lomus');
