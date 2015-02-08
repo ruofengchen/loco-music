@@ -33,6 +33,16 @@ function ShowInteractionPane() {
     $('.reply-options-container').hide()
 
     // TO-DO: read info from db
+   
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            var user_data = JSON.parse(req.responseText)
+            console.log(user_data)
+        }
+    }
+    req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
+    req.send() 
     var p = users[this.id]
     $('.owner-avatar').attr('src', p.avatar)
     $('.owner-name').text(p.name)
