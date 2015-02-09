@@ -3,6 +3,8 @@ var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"L
 var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
 var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
 
+var fake_comments = [{name:'xiao_a', content:'xiao_a has a comment'}, {name:'xiao_b', content:'xiao_b comments'}]
+
 var users = {}
 var map;
 var detailedMarker;
@@ -43,9 +45,13 @@ function ShowInteractionPane() {
             	$('.owner-name').text(user_data.name)
             }
             if ('posts' in user_data && user_data.posts.length > 0) {
-		var post = user_data.posts[0].content
-                console.log(post)
-		$('.owner-post').text(post)
+		        var post = user_data.posts[0].content
+		        $('.owner-post').text(post)
+            }
+            for (var i in fake_comments) {
+                var comment_box = $('<div></div>')
+                comment_box.addClass('comment')
+                comment_box.text(fake_comments[i].conetent)
             }
         }
     }
