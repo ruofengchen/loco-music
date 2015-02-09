@@ -39,15 +39,20 @@ function ShowInteractionPane() {
         if (req.readyState == 4 && req.status == 200) {
             var user_data = JSON.parse(req.responseText)
             console.log(user_data)
+            if ('name' in user_data) {
+            	$('.owner-name').text(user_data.name)
+            }
+            if ('posts' in user_data && user_data.posts.length > 0) {
+		var post = user_data.posts[0].content
+                console.log(post)
+		$('.owner-post').text(post)
+            }
         }
     }
     req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
     req.send() 
     var p = users[this.id]
     $('.owner-avatar').attr('src', p.avatar)
-    $('.owner-name').text(p.name)
-    $('.owner-title').text(p.title)
-    $('.owner-post').text(p.post)
 }
 
 // ui code for avatar
