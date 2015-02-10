@@ -12,33 +12,33 @@ var inDetail = false; // in map or in post
 
 function CommentsReady() {
 
-    if (req.readyState == 4 && req.status == 200) {
-
+    if (this.readyState == 4 && this.status == 200) {
+        var comments = JSON.parse(this.responseText)
+        for (var i in comments) {
+            var comment_box = $('<div></div>')
+            comment_box.addClass('comment')
+            comment_box.text(comments[i].content)
+            $('.comments-container').append(comment_box)
+        }
     }
 }
 
 function PostReady() {
-    if (req.readyState == 4 && req.status == 200) {
-	var user_data = JSON.parse(req.responseText)
-	console.log(user_data)
-	if ('name' in user_data) {
-	    $('.owner-name').text(user_data.name)
-	}
-	if ('posts' in user_data && user_data.posts.length > 0) {
+    if (this.readyState == 4 && this.status == 200) {
+        var user_data = JSON.parse(this.responseText)
+        console.log(user_data)
+        if ('name' in user_data) {
+            $('.owner-name').text(user_data.name)
+        }
+        if ('posts' in user_data && user_data.posts.length > 0) {
             var post = user_data.posts[0].content
             $('.owner-post').text(post)
             
-    	    var req = new XMLHttpRequest()
-    	    req.onreadystatechange = CommentsReady
-    	    req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
-    	    req.send() 
-	}
-	
-	for (var i in fake_comments) {
-	    var comment_box = $('<div></div>')
-	    comment_box.addClass('comment')
-	    comment_box.text(fake_comments[i].conetent)
-	}
+            var req = new XMLHttpRequest()
+            req.onreadystatechange = CommentsReady
+            req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
+            req.send() 
+        }
     }
 }
 
@@ -128,11 +128,11 @@ function InitializePeopleData() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             users = JSON.parse(req.responseText)
-	    for (var id in users) {
-		users[id].avatar = '/img/person.jpg'
+        for (var id in users) {
+        users[id].avatar = '/img/person.jpg'
                 var obj = GetPersonInfoHTML(users[id])
                 PlaceInfoOnMap(obj, users[id].lat, users[id].log, id)
-    	    }
+            }
         }
     }
     req.open('GET', '/php/get_all_users.php', true)
