@@ -10,6 +10,38 @@ var map;
 var detailedMarker;
 var inDetail = false; // in map or in post
 
+function CommentsReady() {
+
+    if (req.readyState == 4 && req.status == 200) {
+
+    }
+}
+
+function PostReady() {
+    if (req.readyState == 4 && req.status == 200) {
+	var user_data = JSON.parse(req.responseText)
+	console.log(user_data)
+	if ('name' in user_data) {
+	    $('.owner-name').text(user_data.name)
+	}
+	if ('posts' in user_data && user_data.posts.length > 0) {
+            var post = user_data.posts[0].content
+            $('.owner-post').text(post)
+            
+    	    var req = new XMLHttpRequest()
+    	    req.onreadystatechange = CommentsReady
+    	    req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
+    	    req.send() 
+	}
+	
+	for (var i in fake_comments) {
+	    var comment_box = $('<div></div>')
+	    comment_box.addClass('comment')
+	    comment_box.text(fake_comments[i].conetent)
+	}
+    }
+}
+
 function ShowInteractionPane() {
 
     $('.interaction-pane').show()
@@ -37,24 +69,7 @@ function ShowInteractionPane() {
     // TO-DO: read info from db
    
     var req = new XMLHttpRequest()
-    req.onreadystatechange = function() {
-        if (req.readyState == 4 && req.status == 200) {
-            var user_data = JSON.parse(req.responseText)
-            console.log(user_data)
-            if ('name' in user_data) {
-            	$('.owner-name').text(user_data.name)
-            }
-            if ('posts' in user_data && user_data.posts.length > 0) {
-		        var post = user_data.posts[0].content
-		        $('.owner-post').text(post)
-            }
-            for (var i in fake_comments) {
-                var comment_box = $('<div></div>')
-                comment_box.addClass('comment')
-                comment_box.text(fake_comments[i].conetent)
-            }
-        }
-    }
+    req.onreadystatechange = PostReady
     req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
     req.send() 
     var p = users[this.id]
