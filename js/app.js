@@ -145,6 +145,7 @@ function InitializeCallback() {
         $('.interaction-pane').hide()
         // remove all dynamically generated contents
         $('.reply-options-container').empty()
+        $('.comments-container').empty()
         inDetail = false
     }
     $('.close-button').click(ClosePane)
