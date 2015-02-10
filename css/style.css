@@ -20,8 +20,9 @@ body, html, #map-canvas
 
 .interaction-pane
 {
+    overflow: scroll;
     width: 90%;
-    height: auto;
+    height: 90%;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -173,7 +174,8 @@ body, html, #map-canvas
 
 .reply-options-container
 {
-    width: 30%;
+    width: 80%;
+    max-width: 600px;
     margin: 0 auto;
 /*    border: 2px solid #752E23;
     border-radius: 2px;*/
@@ -222,27 +224,26 @@ body, html, #map-canvas
 
 .comments-container
 {
-    display: flex;
     overflow: auto;
     width: 100%;
 }
 
-.comment
+.comment-box
 {
+    display: flex;
     width: 100%;
     margin: 0 auto;
-    /*color: #D3B17D;*/
+}
+
+.comment-name
+{
+    overflow: auto;
+    background: #6B9362;
+}
+
+.comment-content
+{
     font: 16px Cochin;
-    text-align: center;
-    background: #C48E69;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: 10px;
-/*    border: 2px solid #752E23;
-    border-radius: 2px;*/
+    text-align: left;
+    background: #D9B611;
 }

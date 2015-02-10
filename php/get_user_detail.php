@@ -15,7 +15,7 @@
     $row = $result->fetch_assoc();
     $user_data = $row;
 
-    $sql = sprintf('SELECT content FROM posts WHERE author_id = %u', $uid);
+    $sql = sprintf('SELECT id, content FROM posts WHERE author_id = %u', $uid);
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }

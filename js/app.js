@@ -16,8 +16,17 @@ function CommentsReady() {
         var comments = JSON.parse(this.responseText)
         for (var i in comments) {
             var comment_box = $('<div></div>')
-            comment_box.addClass('comment')
-            comment_box.text(comments[i].content)
+            comment_box.addClass('comment-box')
+            var comment_name = $('<div></div>')
+            comment_name.addClass('comment-name')
+            var shortname = comments[i].name.substring(0, 6)+'.'
+            console.log(shortname)
+            comment_name.text(shortname)
+            var comment_content = $('<div></div>')
+            comment_content.addClass('comment-content')
+            comment_content.text(comments[i].content)
+            comment_box.append(comment_name)
+            comment_box.append(comment_content)
             $('.comments-container').append(comment_box)
         }
     }
@@ -31,8 +40,8 @@ function PostReady() {
             $('.owner-name').text(user_data.name)
         }
         if ('posts' in user_data && user_data.posts.length > 0) {
-            var post = user_data.posts[0].content
-            $('.owner-post').text(post)
+            var post = user_data.posts[0]
+            $('.owner-post').text(post.content)
             
             var req = new XMLHttpRequest()
             req.onreadystatechange = CommentsReady
