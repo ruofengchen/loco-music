@@ -127,7 +127,7 @@ function PlaceInfoOnMap(obj, x, y, id) {
 function PlaceUsersNicely(users) {
     if (users.length > 0) {
         var unit_x = 0.004
-        var unit_y = 0.003
+        var unit_y = 0.004
         var dx = [-2,-1,1,2,1,-1]
         var dy = [0,-1.7320508,-1.7320508,0,1.7320508,1.7320508]
         for (var i=0; i<6; i++) {
