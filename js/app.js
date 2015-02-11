@@ -110,8 +110,8 @@ function GetPersonDetailHTML(p) {
 
 function PlaceInfoOnMap(obj, x, y, id) {
     var content = obj[0].outerHTML
-    x = parseFloat(x) + Math.random() * 0.04 - 0.02
-    y = parseFloat(y) + Math.random() * 0.04 - 0.02
+    x = parseFloat(x)
+    y = parseFloat(y)
     var mapCenter = new google.maps.LatLng(parseFloat(x), parseFloat(y))
     var marker = new RichMarker({
         position: mapCenter,
@@ -122,6 +122,50 @@ function PlaceInfoOnMap(obj, x, y, id) {
         id: id
     });
     google.maps.event.addListener(marker, 'click', ShowInteractionPane)
+}
+
+function PlaceUsersNicely(users) {
+    if (users.length > 0) {
+        var unit_x = 0.004
+        var unit_y = 0.003
+        var dx = [-2,-1,1,2,1,-1]
+        var dy = [0,-1.7320508,-1.7320508,0,1.7320508,1.7320508]
+        for (var i=0; i<6; i++) {
+            dx[i] = dx[i] * unit_x
+            dy[i] = dy[i] * unit_y
+        }
+        var steps = [1,0,1,1,1,1]
+        var p = 0
+        var x = parseFloat(users[0].lat)
+        var y = parseFloat(users[0].log)
+        var cnt = 0
+        var finished = 0
+        while (1) {
+            for (var i=0; i<steps[p]; i++) {
+                var obj = GetPersonInfoHTML(users[cnt])
+                PlaceInfoOnMap(obj, x, y, cnt)
+                x = x + dx[p]
+                y = y + dy[p]
+                cnt = cnt + 1
+                if (cnt >= users.length - 1) {
+                    finished = 1
+                    break
+                }
+            }
+
+            if (finished == 1) {
+                break
+            }
+
+            p = p + 1
+            if (p == 6) {
+                p = 0
+                for (var i=0; i<6; i++) {
+                    steps[i] = steps[i] + 1
+                }
+            }
+        }
+    }
 }
 
 function InitializeGoogleMap() {
@@ -141,10 +185,7 @@ function InitializePeopleData() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             users = JSON.parse(req.responseText)
-            for (var id in users) {
-                var obj = GetPersonInfoHTML(users[id])
-                PlaceInfoOnMap(obj, users[id].lat, users[id].log, id)
-            }
+            PlaceUsersNicely(users)
         }
     }
     req.open('GET', '/php/get_all_users.php', true)
