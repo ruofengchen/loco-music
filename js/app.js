@@ -193,6 +193,12 @@ function InitializePeopleData() {
 }
 
 function InitializeCallback() {
+
+    function ToggleMenu() {
+        $('.menu').toggle()
+    }
+    $('.hamburger-button').click(ToggleMenu)
+
     function ClosePane() {
         $('.interaction-pane').hide()
         // remove all dynamically generated contents
