@@ -3,9 +3,9 @@ var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"L
 var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
 var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
 
-var fake_comments = [{name:'xiao_a', content:'xiao_a has a comment'}, {name:'xiao_b', content:'xiao_b comments'}]
-
 var users = {}
+var posts = []
+var curr_post_index = -1
 var map;
 var detailedMarker;
 var inDetail = false; // in map or in post
@@ -13,6 +13,7 @@ var inDetail = false; // in map or in post
 function CommentsReady() {
 
     if (this.readyState == 4 && this.status == 200) {
+        $('.comments-container').empty()
         var comments = JSON.parse(this.responseText)
         for (var i in comments) {
             var comment_box = $('<div></div>')
@@ -20,7 +21,6 @@ function CommentsReady() {
             var comment_name = $('<div></div>')
             comment_name.addClass('comment-name')
             var shortname = comments[i].name.substring(0, 6)+'.'
-            console.log(shortname)
             comment_name.text(shortname)
             var comment_content = $('<div></div>')
             comment_content.addClass('comment-content')
@@ -32,21 +32,25 @@ function CommentsReady() {
     }
 }
 
+function GetPostAndItsComments(post) {
+
+    $('.owner-post').text(post.content)        
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = CommentsReady
+    req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
+    req.send() 
+}
+
 function PostReady() {
     if (this.readyState == 4 && this.status == 200) {
         var user_data = JSON.parse(this.responseText)
-        console.log(user_data)
         if ('name' in user_data) {
             $('.owner-name').text(user_data.name)
         }
         if ('posts' in user_data && user_data.posts.length > 0) {
-            var post = user_data.posts[0]
-            $('.owner-post').text(post.content)
-            
-            var req = new XMLHttpRequest()
-            req.onreadystatechange = CommentsReady
-            req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
-            req.send() 
+            posts = user_data.posts
+            curr_post_index = posts.length-1
+            GetPostAndItsComments(posts[curr_post_index])
         }
     }
 }
@@ -155,6 +159,7 @@ function InitializeCallback() {
         // remove all dynamically generated contents
         $('.reply-options-container').empty()
         $('.comments-container').empty()
+        posts = []
         inDetail = false
     }
     $('.close-button').click(ClosePane)
@@ -175,6 +180,22 @@ function InitializeCallback() {
         $('.flag-confirm').toggle()
     }
     $('.flag-button').click(Flag)
+
+    function PrevPost() {
+        if (curr_post_index > 0) {
+            curr_post_index = curr_post_index - 1
+            GetPostAndItsComments(posts[curr_post_index])
+        }
+    }
+    $('.prev-post-button').click(PrevPost)
+
+    function NextPost() {
+        if (curr_post_index < posts.length-1) {
+            curr_post_index = curr_post_index + 1
+            GetPostAndItsComments(posts[curr_post_index])
+        }
+    }
+    $('.next-post-button').click(NextPost)
 }
 
 $(document).ready(function() {

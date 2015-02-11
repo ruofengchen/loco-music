@@ -140,7 +140,7 @@ body, html, #map-canvas
     overflow: auto;
 }
 
-.like-button, .reply-button, .flag-button
+.like-button, .reply-button, .flag-button, .prev-post-button, .next-post-button
 {
     width: 30px;
     height: 30px;
