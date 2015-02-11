@@ -49,8 +49,10 @@ function PostReady() {
         }
         if ('posts' in user_data && user_data.posts.length > 0) {
             posts = user_data.posts
-            curr_post_index = posts.length-1
-            GetPostAndItsComments(posts[curr_post_index])
+            if (posts.length > 0) {
+                curr_post_index = posts.length-1
+                GetPostAndItsComments(posts[curr_post_index])
+            }
         }
     }
 }
@@ -79,21 +81,19 @@ function ShowInteractionPane() {
     $('.reply-options-container').append(reply_textbox)
     $('.reply-options-container').hide()
 
-    // TO-DO: read info from db
-   
     var req = new XMLHttpRequest()
     req.onreadystatechange = PostReady
     req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
     req.send() 
     var p = users[this.id]
-    $('.owner-avatar').attr('src', p.avatar)
+    $('.owner-avatar').attr('src', '/php/get_avatar.php?n='+p.user_name)
 }
 
 // ui code for avatar
 function GetPersonInfoHTML(p) {
 
     var img = $('<img></img>')
-    img.attr('src', p.avatar)
+    img.attr('src', '/php/get_avatar.php?n='+p.user_name)
     img.addClass('avatar')
     return img
 }
@@ -141,8 +141,7 @@ function InitializePeopleData() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             users = JSON.parse(req.responseText)
-        for (var id in users) {
-        users[id].avatar = '/img/person.jpg'
+            for (var id in users) {
                 var obj = GetPersonInfoHTML(users[id])
                 PlaceInfoOnMap(obj, users[id].lat, users[id].log, id)
             }
@@ -150,7 +149,6 @@ function InitializePeopleData() {
     }
     req.open('GET', '/php/get_all_users.php', true)
     req.send()
-
 }
 
 function InitializeCallback() {
@@ -176,7 +174,6 @@ function InitializeCallback() {
     $('.reply-button').click(ReplyPost)
 
     function Flag() {
-        console.log("here")
         $('.flag-confirm').toggle()
     }
     $('.flag-button').click(Flag)
