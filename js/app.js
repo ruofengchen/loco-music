@@ -59,7 +59,7 @@ function PostReady() {
 
 function ShowInteractionPane() {
 
-    $('#interaction-pane').modal('toggle')
+    $('#interaction-pane').modal('show')
     if (inDetail) return
     inDetail = true
 
@@ -201,7 +201,7 @@ function InitializeCallback() {
     $('#hamburger-button').click(ToggleMenu)
 
     function ClosePane() {
-        $('#interaction-pane').hide()
+        $('#interaction-pane').modal('hide')
         // remove all dynamically generated contents
         $('#reply-options-container').empty()
         $('#comments-container').empty()
