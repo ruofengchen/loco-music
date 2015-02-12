@@ -6,61 +6,69 @@ This is the HTML document you'll use jQuery to modify. To take the quiz, click o
 -->
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="/lib/richmarker-compiled.js"></script>
     <script src="/js/app.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 </head>
-<body>
-    <div class="status-bar">
-        <div class="login-box">
-            <input class="username-textbox" type="text" value="username or email">
-            <input class="password-textbox" type="text" value="password">
-            <div class="login-button">login</div>
-            <div class="register-button">register</div>
-        </div>
-        <img class="hamburger-button" src="/img/hamburger.png"></img>
+<body class="container-fluid">
+    <div class="navbar navbar-default navbar-fixed-top" id="status-bar">
+        <form class="form-inline">
+            <input id="username-textbox" type="text" class="form-control" placeholder="User name or E-mail">
+            <input id="password-textbox" type="password" class="form-control" placehold="Password">
+            <button class="btn btn-default navbar-btn" id="login-button">Sign in</button>
+            <button class="btn btn-default navbar-btn" id="register-button">register</button>
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-button"></span>
+            </button>
+        </form>
     </div>
-    <div class="menu" style="display: none;">
-        <div class="menu-item">Find me</div>
-        <div class="menu-item" id="inbox-button">Inbox</div>
-        <div class="menu-item">New Post</div>
-        <div class="menu-item">Search</div>
-        <div class="menu-item">Settings</div>
-        <div class="menu-item">Logout</div>
+    <div id="menu" style="display: none;">
+        <div id="menu-item">Find me</div>
+        <div id="inbox-button">Inbox</div>
+        <div id="menu-item">New Post</div>
+        <div id="menu-item">Search</div>
+        <div id="menu-item">Settings</div>
+        <div id="menu-item">Logout</div>
     </div>
     <div id="map-canvas"></div>
-    <div class="interaction-pane center" style="display: none;">
-        <div class="top-bar">
-            <img class="close-button" src="/img/x.png"></img>
-        </div>
-        <div class="owner-box">
-            <div class="owner-info">
-                <img class="owner-avatar"></img>
-                <div class="owner-name"></div>
-                <div class="owner-title"></div>
-            </div>
-            <div class="owner-post-container">
-                <div class="owner-post"></div>
-                <div class="action-bar-container">
-                    <div class="action-bar">
-                        <img class="like-button" src="/img/heart_grey.png"></img>
-                        <img class="reply-button" src="/img/reply.png"></img>
-                        <img class="flag-button" src="/img/flag.png"></img>
-                        <div class="flag-confirm">INAPPROPRIATE?</div>
-                        <img class="prev-post-button" src="/img/up_arrow.png"></img>
-                        <img class="next-post-button" src="/img/down_arrow.png"></img>
+    <div id="interaction-pane" class="modal fade" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div id="top-bar">
+                    <span class="glyphicon glyphicon-remove" id="close-button"></span>
+                </div>
+                <div id="owner-box">
+                    <div id="owner-info">
+                        <img id="owner-avatar" class="img-rounded"></img>
+                        <div id="owner-name"></div>
+                        <div id="owner-title"></div>
                     </div>
                 </div>
+                <div id="owner-post-container">
+                    <div id="owner-post"></div>
+                    <div id="action-bar-container">
+                        <div id="action-bar">
+                            <span class="glyphicon glyphicon-heart" id="like-button"></span>
+                            <span class="glyphicon glyphicon-comment" id="reply-button"></span>
+                            <span class="glyphicon glyphicon-flag" id="flag-button"></span>
+                            <div id="flag-confirm">INAPPROPRIATE?</div>
+                            <span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span>
+                            <span id="next-post-button" class="glyphicon glyphicon-chevron-down"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="reply-container">
+                    <div id="reply-options-container"></div>
+                </div>
+                <div id="comments-container"></div>
             </div>
-        </div>
-        <div class="reply-container">
-            <div class="reply-options-container"></div>
-        </div>
-        <div class="comments-container">
         </div>
     </div>
     

@@ -13,28 +13,28 @@ var inDetail = false; // in map or in post
 function CommentsReady() {
 
     if (this.readyState == 4 && this.status == 200) {
-        $('.comments-container').empty()
+        $('#comments-container').empty()
         var comments = JSON.parse(this.responseText)
         for (var i in comments) {
             var comment_box = $('<div></div>')
-            comment_box.addClass('comment-box')
+            comment_box.attr('id', 'comment-box')
             var comment_name = $('<div></div>')
-            comment_name.addClass('comment-name')
+            comment_name.attr('id', 'comment-name')
             var shortname = comments[i].name.substring(0, 6)+'.'
             comment_name.text(shortname)
             var comment_content = $('<div></div>')
-            comment_content.addClass('comment-content')
+            comment_content.attr('id', 'comment-content')
             comment_content.text(comments[i].content)
             comment_box.append(comment_name)
             comment_box.append(comment_content)
-            $('.comments-container').append(comment_box)
+            $('#comments-container').append(comment_box)
         }
     }
 }
 
 function GetPostAndItsComments(post) {
 
-    $('.owner-post').text(post.content)        
+    $('#owner-post').text(post.content)        
     var req = new XMLHttpRequest()
     req.onreadystatechange = CommentsReady
     req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
@@ -45,7 +45,7 @@ function PostReady() {
     if (this.readyState == 4 && this.status == 200) {
         var user_data = JSON.parse(this.responseText)
         if ('name' in user_data) {
-            $('.owner-name').text(user_data.name)
+            $('#owner-name').text(user_data.name)
         }
         if ('posts' in user_data && user_data.posts.length > 0) {
             posts = user_data.posts
@@ -59,11 +59,11 @@ function PostReady() {
 
 function ShowInteractionPane() {
 
-    $('.interaction-pane').show()
+    $('#interaction-pane').modal('toggle')
     if (inDetail) return
     inDetail = true
 
-    $('.flag-confirm').hide()
+    $('#flag-confirm').hide()
 
     var reply_options = ['also recommend Beethoven\' Symphony no.5',
         'Mahler is much better',
@@ -71,22 +71,22 @@ function ShowInteractionPane() {
     for (var i in reply_options) {
         var reply_option_box = $('<div></div>')
         reply_option_box.text(reply_options[i])
-        reply_option_box.addClass('reply-option')
-        $('.reply-options-container').append(reply_option_box)
+        reply_option_box.attr('id', 'reply-option')
+        $('#reply-options-container').append(reply_option_box)
     }
     var reply_textbox = $('<input>')
     reply_textbox.attr('type', 'text')
     reply_textbox.val('Type your own...')
-    reply_textbox.addClass('reply-textbox')
-    $('.reply-options-container').append(reply_textbox)
-    $('.reply-options-container').hide()
+    reply_textbox.attr('id', 'reply-textbox')
+    $('#reply-options-container').append(reply_textbox)
+    $('#reply-options-container').hide()
 
     var req = new XMLHttpRequest()
     req.onreadystatechange = PostReady
     req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
     req.send() 
     var p = users[this.id]
-    $('.owner-avatar').attr('src', '/php/get_avatar.php?n='+p.user_name)
+    $('#owner-avatar').attr('src', '/php/get_avatar.php?n='+p.user_name)
 }
 
 // ui code for avatar
@@ -94,14 +94,15 @@ function GetPersonInfoHTML(p) {
 
     var img = $('<img></img>')
     img.attr('src', '/php/get_avatar.php?n='+p.user_name)
-    img.addClass('avatar')
+    img.attr('id', 'avatar')
+    img.addClass('img-circle')
     return img
 }
 
 // ui code for info box
 function GetPersonDetailHTML(p) {
     var box = $('<div></div>')
-    box.addClass('detail-box')
+    box.attr('id', 'detail-box')
     var post = $('<div></div>')
     post.text(p.post)
     box.append(post)
@@ -195,35 +196,35 @@ function InitializePeopleData() {
 function InitializeCallback() {
 
     function ToggleMenu() {
-        $('.menu').toggle()
+        $('#menu').toggle()
     }
-    $('.hamburger-button').click(ToggleMenu)
+    $('#hamburger-button').click(ToggleMenu)
 
     function ClosePane() {
-        $('.interaction-pane').hide()
+        $('#interaction-pane').hide()
         // remove all dynamically generated contents
-        $('.reply-options-container').empty()
-        $('.comments-container').empty()
+        $('#reply-options-container').empty()
+        $('#comments-container').empty()
         posts = []
         inDetail = false
     }
-    $('.close-button').click(ClosePane)
+    $('#close-button').click(ClosePane)
 
-    $('.like-button').attr('src', '/img/heart_grey.png')
+    $('#like-button').attr('src', '/img/heart_grey.png')
     function LikePost() {
-        $('.like-button').attr('src', '/img/heart_red.png')
+        $('#like-button').attr('src', '/img/heart_red.png')
     }
-    $('.like-button').click(LikePost)
+    $('#like-button').click(LikePost)
 
     function ReplyPost() {
-        $('.reply-options-container').toggle()
+        $('#reply-options-container').toggle()
     }
-    $('.reply-button').click(ReplyPost)
+    $('#reply-button').click(ReplyPost)
 
     function Flag() {
-        $('.flag-confirm').toggle()
+        $('#flag-confirm').toggle()
     }
-    $('.flag-button').click(Flag)
+    $('#flag-button').click(Flag)
 
     function PrevPost() {
         if (curr_post_index > 0) {
@@ -231,7 +232,7 @@ function InitializeCallback() {
             GetPostAndItsComments(posts[curr_post_index])
         }
     }
-    $('.prev-post-button').click(PrevPost)
+    $('#prev-post-button').click(PrevPost)
 
     function NextPost() {
         if (curr_post_index < posts.length-1) {
@@ -239,7 +240,7 @@ function InitializeCallback() {
             GetPostAndItsComments(posts[curr_post_index])
         }
     }
-    $('.next-post-button').click(NextPost)
+    $('#next-post-button').click(NextPost)
 }
 
 $(document).ready(function() {
@@ -247,7 +248,7 @@ $(document).ready(function() {
         InitializeGoogleMap()
         InitializePeopleData()
         InitializeCallback()
-        $('.interaction-pane').hide()
+        $('#interaction-pane').hide()
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })
