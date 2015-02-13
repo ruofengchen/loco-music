@@ -1,13 +1,8 @@
 <!DOCTYPE html>
-<!--
-
-This is the HTML document you'll use jQuery to modify. To take the quiz, click over to app.js!
-
--->
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?version=1">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -46,22 +41,20 @@ This is the HTML document you'll use jQuery to modify. To take the quiz, click o
                 <div id="owner-box">
                     <div id="owner-info">
                         <img id="owner-avatar" class="img-rounded"></img>
-                        <div id="owner-name"></div>
+                        <div id="owner-name" class="text-center"></div>
                         <div id="owner-title"></div>
                     </div>
-                    <div id="owner-post-container">
-                        <div id="owner-post"></div>
-                        <div id="action-bar-container">
-                            <div id="action-bar">
-                                <span class="glyphicon glyphicon-heart" id="like-button"></span>
-                                <span class="glyphicon glyphicon-comment" id="reply-button"></span>
-                                <span class="glyphicon glyphicon-flag" id="flag-button"></span>
-                                <span id="flag-confirm">INAPPROPRIATE?</span>
-                                <span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span>
-                                <span id="next-post-button" class="glyphicon glyphicon-chevron-down"></span>
-                            </div>
-                        </div>
+                    <div id="owner-post-container" class="breadcrumb">
+                        <div id="owner-post" class="text-left"></div>
                     </div>
+                </div>
+                <div id="action-bar">
+                    <span class="glyphicon glyphicon-heart" id="like-button"></span>
+                    <span class="glyphicon glyphicon-comment" id="reply-button"></span>
+                    <span class="glyphicon glyphicon-flag" id="flag-button"></span>
+                    <span id="flag-confirm">INAPPROPRIATE?</span>
+                    <span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span>
+                    <span id="next-post-button" class="glyphicon glyphicon-chevron-down"></span>
                 </div>
                 <div id="reply-container">
                     <div id="reply-options-container"></div>

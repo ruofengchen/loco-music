@@ -12,7 +12,27 @@ html, body {
     height: 40px;
 }
 
+#owner-box {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 #owner-avatar {
     width: 60px;
     height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#owner-post-container {
+    width: calc(100%-80px);
+    display: flex;
+    align-items: center;
+}
+
+#action-bar {
+    width: 60px;
 }
