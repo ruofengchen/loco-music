@@ -175,6 +175,10 @@ function PlaceUsersNicely(users) {
 function InitializeGoogleMap() {
     var mapOptions = {
         zoom: 13,
+        disableDoubleClickZoom: true,
+        zoomControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
         center: new google.maps.LatLng(37.5735, -122.0469),
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{featureType:"all", elementType:"labels", stylers:[{visibility:"off"}]}]

@@ -19,7 +19,7 @@
             <div><button class="btn btn-default" id="login-button">Sign in</button></div>
         </div>
     </div>
-    <button type="button" class="btn btn-default">
+    <button class="btn btn-rounded">
         <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-button"></span>
     </button>
     <div id="menu" style="display: none;">
@@ -45,14 +45,15 @@
                     <div id="owner-post-container" class="breadcrumb">
                         <div id="owner-post" class="text-left"></div>
                     </div>
+                    <div id="post-nav-button-container">
+                        <button class="btn btn-rounded"><span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span></button>
+                        <button class="btn btn-rounded"><span id="next-post-button" class="glyphicon glyphicon-chevron-down"></span></button>
+                    </div>
                 </div>
                 <div id="action-bar">
-                    <span class="glyphicon glyphicon-heart" id="like-button"></span>
-                    <span class="glyphicon glyphicon-comment" id="reply-button"></span>
-                    <span class="glyphicon glyphicon-flag" id="flag-button"></span>
-                    <span id="flag-confirm">INAPPROPRIATE?</span>
-                    <span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span>
-                    <span id="next-post-button" class="glyphicon glyphicon-chevron-down"></span>
+                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-heart" id="like-button"></span></button>
+                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-comment" id="reply-button"></span></button>
+                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-flag" id="flag-button"></span></button>
                 </div>
                 <div id="reply-container" class="list-group">
                     <div id="reply-options-container"></div>
