@@ -18,17 +18,20 @@
             <input id="password-textbox" type="password" class="form-control" placeholder="Password">
             <div><button class="btn btn-default" id="login-button">Sign in</button></div>
         </div>
-    </div>
-    <button class="btn btn-rounded">
-        <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-button"></span>
-    </button>
-    <div id="menu" style="display: none;">
-        <div id="menu-item">Find me</div>
-        <div id="inbox-button">Inbox</div>
-        <div id="menu-item">New Post</div>
-        <div id="menu-item">Search</div>
-        <div id="menu-item">Settings</div>
-        <div id="menu-item">Logout</div>
+        <div id="taskbar" style="display: none;">
+            <div><button class="btn btn-default" id="menu-item">Find me</button></div>
+            <div><button class="btn btn-default" id="inbox-button">Inbox</button></div>
+            <div><button class="btn btn-default" id="menu-item">New Post</button></div>
+            <div><button class="btn btn-default" id="menu-item">Search</button></div>
+            <div><button class="btn btn-default" id="menu-item">Settings</button></div>
+            <div><button class="btn btn-default" id="menu-item">Logout</button></div>
+            <button class="btn btn-default"><span class="glyphicon glyphicon-remove-circle" id="show-postbar-button"></span></button>
+        </div>
+        <div id="postbar" style="display: none;">
+            <div id="name-on-top"></div>
+            <div id="post-on-top"></div>
+            <button class="btn btn-default"><span class="glyphicon glyphicon-th-large" id="show-taskbar-button"></span></button>
+        </div>
     </div>
     <div id="map-canvas"></div>
     <div class="modal fade" id="interaction-pane" style="display: none;">

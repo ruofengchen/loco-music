@@ -1,8 +1,4 @@
-// fake data
-var p0 = {name:'Rojie', title:'xiabi', zip:94403, avatar:"/img/cat.jpg", post:"Like cat music", id:"0"}
-var p1 = {name:'Shine', title:'shacha', zip:94541, avatar:"/img/fox.jpg", post:"Practising Rojie\'s song", id:"1"}
-var p2 = {name:'ricki', title:'gAygAy', zip:94555, avatar:"/img/puppy.jpg", post:"I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music. I just learned to poop music.", id:"2"}
-
+var you;
 var users = {}
 var posts = []
 var curr_post_index = -1
@@ -45,6 +41,7 @@ function GetPostAndItsComments(post) {
 function PostReady() {
     if (this.readyState == 4 && this.status == 200) {
         var user_data = JSON.parse(this.responseText)
+        console.log(user_data)
         if ('name' in user_data) {
             $('#owner-name').text(user_data.name)
         }
@@ -63,6 +60,11 @@ function ShowInteractionPane() {
     $('#interaction-pane').modal('show')
     if (inDetail) return
     inDetail = true
+
+    // reset
+    posts = [];
+    curr_post_index = -1;
+    $('#owner-post').text('')
 
     $('#flag-confirm').hide()
 
@@ -207,6 +209,41 @@ function InitializeCallback() {
     }
     $('#hamburger-button').click(ToggleMenu)
 
+    function Login() {
+        
+        var un = $('#username-textbox').val()
+        var pw = $('#password-textbox').val()
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+                if (req.responseText == 'login failure') {
+                        
+                }
+                else {
+                    $('#login-container').hide()
+                    $('#postbar').show()
+                    you = JSON.parse(req.responseText)
+                    $('#name-on-top').text(you.name)
+                    $('#post-on-top').text(you.content)
+                }
+            }
+        }
+        req.open('GET', '/php/login.php?un='+un+'&pw='+pw, true)
+        req.send()
+    }
+    $('#login-button').click(Login)
+
+    function ShowTaskbar() {
+        $('#postbar').hide()
+        $('#taskbar').show()
+    }
+    $('#show-taskbar-button').click(ShowTaskbar)
+
+    function ShowPostbar() {
+        $('#postbar').show()
+        $('#taskbar').hide()
+    }
+    $('#show-postbar-button').click(ShowPostbar)
     function ClosePane() {
         $('#interaction-pane').modal('hide')
         // remove all dynamically generated contents
@@ -242,7 +279,7 @@ function InitializeCallback() {
     $('#prev-post-button').click(PrevPost)
 
     function NextPost() {
-        if (curr_post_index < posts.length-1) {
+        if (curr_post_index != -1 &&curr_post_index < posts.length-1) {
             curr_post_index = curr_post_index + 1
             GetPostAndItsComments(posts[curr_post_index])
         }

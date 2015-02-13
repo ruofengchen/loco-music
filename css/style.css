@@ -27,6 +27,18 @@ html, body {
     padding-bottom: 5px;
 }
 
+#taskbar, #postbar {
+    display: flex;
+}
+
+#postbar {
+    display: flex;
+    color: #FFDDCA;
+}
+
+#show-taskbar-button {
+}
+
 #username-textbox, #password-textbox {
     margin-right: 5px;
     max-width: 140px;
