@@ -14,25 +14,39 @@ html, body {
 
 #owner-box {
     width: 100%;
-    height: 200px;
+    height: 100px;
     display: flex;
     padding-left: 20px;
     padding-right: 20px;
 }
 
+#owner-info {
+    width: 20%;
+    max-width: 60px;
+    margin-right: 20px;
+}
+
 #owner-avatar {
-    width: 60px;
-    height: 60px;
+    width: 100%;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
 
 #owner-post-container {
-    width: calc(100%-80px);
+    width: 80%;
     display: flex;
     align-items: center;
 }
 
 #action-bar {
-    width: 60px;
+    width: 80%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#reply-container {
+    width: 60%;
+    margin: auto;
 }

@@ -69,14 +69,16 @@ function ShowInteractionPane() {
         'Mahler is much better',
         'Go ahead to listen to Justin Bieber']
     for (var i in reply_options) {
-        var reply_option_box = $('<div></div>')
+        var reply_option_box = $('<a href="#"></a>')
         reply_option_box.text(reply_options[i])
+        reply_option_box.addClass('list-group-item')
         reply_option_box.attr('id', 'reply-option')
         $('#reply-options-container').append(reply_option_box)
     }
     var reply_textbox = $('<input>')
+    reply_textbox.addClass('list-group-item form-control')
     reply_textbox.attr('type', 'text')
-    reply_textbox.val('Type your own...')
+    reply_textbox.attr('placeholder', 'Type your own...')
     reply_textbox.attr('id', 'reply-textbox')
     $('#reply-options-container').append(reply_textbox)
     $('#reply-options-container').hide()
