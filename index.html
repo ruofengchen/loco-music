@@ -12,17 +12,16 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 </head>
 <body class="container-fluid">
-    <div class="navbar navbar-default navbar-fixed-top" id="status-bar">
-        <form class="form-inline">
-            <input id="username-textbox" type="text" class="form-control" placeholder="User name or E-mail">
-            <input id="password-textbox" type="password" class="form-control" placehold="Password">
-            <button class="btn btn-default navbar-btn" id="login-button">Sign in</button>
-            <button class="btn btn-default navbar-btn" id="register-button">register</button>
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-button"></span>
-            </button>
-        </form>
+    <div class="navbar-inverse navbar-fixed-top" id="status-bar">
+        <div id="login-container">
+            <input id="username-textbox" type="text" class="form-control" placeholder="Username/E-mail">
+            <input id="password-textbox" type="password" class="form-control" placeholder="Password">
+            <div><button class="btn btn-default" id="login-button">Sign in</button></div>
+        </div>
     </div>
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-button"></span>
+    </button>
     <div id="menu" style="display: none;">
         <div id="menu-item">Find me</div>
         <div id="inbox-button">Inbox</div>
@@ -32,11 +31,10 @@
         <div id="menu-item">Logout</div>
     </div>
     <div id="map-canvas"></div>
-    <div id="interaction-pane" class="modal fade" style="display: none;">
+    <div class="modal fade" id="interaction-pane" style="display: none;">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" id="interaction-pane-container">
                 <div id="top-bar">
-                    <span class="glyphicon glyphicon-remove" id="close-button"></span>
                 </div>
                 <div id="owner-box">
                     <div id="owner-info">

@@ -18,15 +18,16 @@ function CommentsReady() {
         for (var i in comments) {
             var comment_box = $('<div></div>')
             comment_box.attr('id', 'comment-box')
+            var comment_content = $('<div></div>')
+            comment_content.addClass('breadcrumb')
+            comment_content.attr('id', 'comment-content')
+            comment_content.text(comments[i].content)
             var comment_name = $('<div></div>')
             comment_name.attr('id', 'comment-name')
             var shortname = comments[i].name.substring(0, 6)+'.'
-            comment_name.text(shortname)
-            var comment_content = $('<div></div>')
-            comment_content.attr('id', 'comment-content')
-            comment_content.text(comments[i].content)
-            comment_box.append(comment_name)
+            comment_name.text('---- '+shortname)
             comment_box.append(comment_content)
+            comment_box.append(comment_name)
             $('#comments-container').append(comment_box)
         }
     }
@@ -210,7 +211,7 @@ function InitializeCallback() {
         posts = []
         inDetail = false
     }
-    $('#close-button').click(ClosePane)
+    $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
     $('#like-button').attr('src', '/img/heart_grey.png')
     function LikePost() {

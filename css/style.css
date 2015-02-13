@@ -7,17 +7,44 @@ html, body {
     height: 100%;  
 }
 
+#login-container {
+    display: flex;
+}
+
+#status-bar {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#username-textbox, #password-textbox {
+    margin-right: 5px;
+    max-width: 140px;
+}
+
+#login-button {
+    margin: auto;
+}
+
 #avatar {
     width: 40px;
     height: 40px;
+}
+
+#interaction-pane-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: scroll;
+    max-height: 460px;
 }
 
 #owner-box {
     width: 100%;
     height: 100px;
     display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 #owner-info {
@@ -49,4 +76,11 @@ html, body {
 #reply-container {
     width: 60%;
     margin: auto;
+}
+
+#comment-box {
+    display: flex;
+    width:auto;
+    align-items: center;
+    margin-top: 30px;
 }
