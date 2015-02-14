@@ -3,8 +3,8 @@ var users = {}
 var posts = []
 var curr_post_index = -1
 var map;
-var detailedMarker;
 var inDetail = false; // in map or in post
+var curr_zip = 94555
 
 function createCookie(name,value,days) {
     if (days) {
@@ -199,6 +199,20 @@ function PlaceUsersNicely(users) {
     }
 }
 
+function MapMoveAround() {
+    var lat = map.center.lat()
+    var log = map.center.lng()
+
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            console.log(req.responseText)
+        }
+    }
+    req.open('GET', '/php/update_area.php?lat='+lat+'&log='+log, true)
+    req.send()
+}
+
 function InitializeGoogleMap() {
     var mapOptions = {
         zoom: 13,
@@ -211,7 +225,8 @@ function InitializeGoogleMap() {
         styles: [{featureType:"all", elementType:"labels", stylers:[{visibility:"off"}]}]
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    // google.maps.event.addListener(map, 'zoom_changed', ZoomChanged);
+    google.maps.event.addListener(map, 'dragend', MapMoveAround);
+    
 }
 
 function InitializePeopleData() {
