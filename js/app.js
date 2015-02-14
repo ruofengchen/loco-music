@@ -6,6 +6,31 @@ var map;
 var detailedMarker;
 var inDetail = false; // in map or in post
 
+function createCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+
 function CommentsReady() {
 
     if (this.readyState == 4 && this.status == 200) {
@@ -217,13 +242,16 @@ function InitializeCallback() {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == 'login failure') {
-                        
+                    $('#password-textbox').val('')
                 }
                 else {
+                    $('#password-textbox').val('')
+                    $('#username-textbox').val('')
+
                     $('#login-container').hide()
                     $('#postbar').show()
                     you = JSON.parse(req.responseText)
-                    document.cookie = 'token=' + you.token + '; expires=Thu, 1 Jan 2099 00:00:00 UTC';
+                    createCookie('token', you.token, 1)
                     $('#name-on-top').text(you.name)
                     $('#post-on-top').text(you.content)
                 }
@@ -286,6 +314,13 @@ function InitializeCallback() {
         }
     }
     $('#next-post-button').click(NextPost)
+
+    function Logout() {
+        eraseCookie('token')
+        $('#login-container').show()
+        $('#taskbar').hide()
+    }
+    $('#logout-button').click(Logout)
 }
 
 function CheckSession() {
