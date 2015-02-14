@@ -1,6 +1,7 @@
 var you;
 var users = {}
 var posts = []
+var markers = []
 var curr_post_index = -1
 var map;
 var inDetail = false; // in map or in post
@@ -153,6 +154,7 @@ function PlaceInfoOnMap(obj, x, y, id) {
         id: id
     });
     google.maps.event.addListener(marker, 'click', ShowInteractionPane)
+    markers.push(marker)
 }
 
 function PlaceUsersNicely(users) {
@@ -206,10 +208,23 @@ function MapMoveAround() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            console.log(req.responseText)
+            if (req.responseText == 'no need update') {
+
+            }
+            else {
+                // remove all markers
+                for (var i=0; i<markers.length; i++) {
+                    markers[i].setMap(null)
+                }
+                markers = []
+
+                users = JSON.parse(req.responseText)
+                console.log(users)
+                PlaceUsersNicely(users)
+            }
         }
     }
-    req.open('GET', '/php/update_area.php?lat='+lat+'&log='+log, true)
+    req.open('GET', '/php/update_area.php?lat='+lat+'&log='+log+'&zipold='+curr_zip, true)
     req.send()
 }
 
