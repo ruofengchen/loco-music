@@ -223,6 +223,7 @@ function InitializeCallback() {
                     $('#login-container').hide()
                     $('#postbar').show()
                     you = JSON.parse(req.responseText)
+                    document.cookie = 'token=' + you.token + '; expires=Thu, 1 Jan 2099 00:00:00 UTC';
                     $('#name-on-top').text(you.name)
                     $('#post-on-top').text(you.content)
                 }
@@ -287,11 +288,33 @@ function InitializeCallback() {
     $('#next-post-button').click(NextPost)
 }
 
+function CheckSession() {
+    
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            if (req.responseText == 'need login') {
+                    
+            }
+            else {
+                $('#login-container').hide()
+                $('#postbar').show()
+                you = JSON.parse(req.responseText)
+                $('#name-on-top').text(you.name)
+                $('#post-on-top').text(you.content)
+            }
+        }
+    }
+    req.open('GET', '/php/check_session.php', true)
+    req.send()
+}
+
 $(document).ready(function() {
     function initialize() {
         InitializeGoogleMap()
         InitializePeopleData()
         InitializeCallback()
+        CheckSession()
         $('#interaction-pane').hide()
     }
     google.maps.event.addDomListener(window, 'load', initialize);
