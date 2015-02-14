@@ -38,7 +38,7 @@
 
     if ($minzip != $zip_old) {
 
-        $sql = 'SELECT users.id, users.user_name, zipcodes.log, zipcodes.lat FROM users JOIN zipcodes ON users.zip = zipcodes.zipcode WHERE users.zip = ' . $minzip ;
+        $sql = 'SELECT id, user_name FROM users WHERE zip = ' . $minzip ;
         if(!$result = $conn->query($sql)){
             die('There was an error running the query [' . $conn->error . ']');
         }
@@ -47,7 +47,16 @@
         while($row = $result->fetch_assoc()){
             $users[] = $row;
         }
-        echo json_encode($users);
+        $sql = 'SELECT log, lat FROM zipcodes WHERE zipcode = ' . $minzip . ' LIMIT 1';
+        if(!$result = $conn->query($sql)){
+            die('There was an error running the query [' . $conn->error . ']');
+        }
+        $row = $result->fetch_assoc();
+        $ret['users'] = $users;
+        $ret['zip'] = $minzip;
+        $ret['log'] = $row['log'];
+        $ret['lat'] = $row['lat'];
+        echo json_encode($ret);
     }
     else {
         echo "no need update";

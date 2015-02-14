@@ -157,7 +157,7 @@ function PlaceInfoOnMap(obj, x, y, id) {
     markers.push(marker)
 }
 
-function PlaceUsersNicely(users) {
+function PlaceUsersNicely(users, log, lat) {
     if (users.length > 0) {
         var unit_x = 0.004
         var unit_y = 0.004
@@ -169,8 +169,8 @@ function PlaceUsersNicely(users) {
         }
         var steps = [1,0,1,1,1,1]
         var p = 0
-        var x = parseFloat(users[0].lat)
-        var y = parseFloat(users[0].log)
+        var x = parseFloat(lat)
+        var y = parseFloat(log)
         var cnt = 0
         var finished = 0
         while (1) {
@@ -218,9 +218,10 @@ function MapMoveAround() {
                 }
                 markers = []
 
-                users = JSON.parse(req.responseText)
-                console.log(users)
-                PlaceUsersNicely(users)
+                var ret = JSON.parse(req.responseText)
+                users = ret.users
+                curr_zip = ret.zip
+                PlaceUsersNicely(users, ret.log, ret.lat)
             }
         }
     }
@@ -249,11 +250,12 @@ function InitializePeopleData() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            users = JSON.parse(req.responseText)
-            PlaceUsersNicely(users)
+            var ret = JSON.parse(req.responseText)
+            users = ret.users
+            PlaceUsersNicely(users, ret.log, ret.lat)
         }
     }
-    req.open('GET', '/php/get_all_users.php', true)
+    req.open('GET', '/php/get_all_users.php?zip='+curr_zip, true)
     req.send()
 }
 
