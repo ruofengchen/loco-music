@@ -121,7 +121,7 @@ function ShowInteractionPane() {
 }
 
 // ui code for avatar
-function GetPersonInfoHTML(color, music_type) {
+function GetMarkerInfoHTML(color, music_type) {
     var box = $('<div></div>')
     box.addClass = $('marker-container')
     var marker = $('<img></img>')
@@ -136,13 +136,23 @@ function GetPersonInfoHTML(color, music_type) {
 }
 
 // ui code for info box
-function GetPersonDetailHTML(p) {
-    var box = $('<div></div>')
-    box.attr('id', 'detail-box')
-    var post = $('<div></div>')
-    post.text(p.post)
-    box.append(post)
-    return box
+function ShowUserInfo() {
+    // get position of marker and adjust infowindow's
+    var pos = new google.maps.LatLng(this.position.lat()+0.008, this.position.lng())
+
+    var p = users[this.id]
+    var infobox = $('<div></div>')
+    infobox.addClass('infobox')
+    var avatar = $('<img></img>')
+    avatar.addClass('avatar')
+    avatar.attr('src', '/php/get_avatar.php?n='+p.user_name)
+    infobox.append(avatar)
+    var name = $('<div></div>')
+    name.addClass('name-in-infobox')
+    name.text('hello!')
+    infobox.append(p.name)
+    var infowindow = new google.maps.InfoWindow({content: infobox[0].outerHTML, position: pos});
+    infowindow.open(map)
 }
 
 function PlaceInfoOnMap(obj, x, y, id) {
@@ -158,7 +168,7 @@ function PlaceInfoOnMap(obj, x, y, id) {
         shadow: '',
         id: id
     });
-    google.maps.event.addListener(marker, 'click', ShowInteractionPane)
+    google.maps.event.addListener(marker, 'click', ShowUserInfo)
     markers.push(marker)
 }
 
@@ -180,7 +190,7 @@ function PlaceUsersNicely(users, log, lat) {
         var finished = 0
         while (1) {
             for (var i=0; i<steps[p]; i++) {
-                var obj = GetPersonInfoHTML('green', 'guitar')
+                var obj = GetMarkerInfoHTML('green', 'guitar')
                 PlaceInfoOnMap(obj, x, y, cnt)
                 x = x + dx[p]
                 y = y + dy[p]

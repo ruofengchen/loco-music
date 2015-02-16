@@ -67,6 +67,20 @@ html, body {
     z-index: 1;
 }
 
+.infobox {
+    width: 100px;
+    height: 100px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+}
+
+.name-in-infobox {
+
+}
+
 #interaction-pane-container {
     padding-left: 20px;
     padding-right: 20px;

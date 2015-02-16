@@ -9,7 +9,7 @@
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
 
-    $sql = 'SELECT id, user_name FROM users WHERE zip = ' . $zip;
+    $sql = 'SELECT id, name, user_name FROM users WHERE zip = ' . $zip;
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }
