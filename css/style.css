@@ -48,9 +48,23 @@ html, body {
     margin: auto;
 }
 
-#avatar {
+.marker-container {
+    width: 40px;
+    height: 60px;
+}
+
+.marker-image {
+    width: 40px;
+    height: 60px;
+}
+
+.music-type-image {
     width: 40px;
     height: 40px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
 }
 
 #interaction-pane-container {

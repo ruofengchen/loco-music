@@ -121,13 +121,18 @@ function ShowInteractionPane() {
 }
 
 // ui code for avatar
-function GetPersonInfoHTML(p) {
-
-    var img = $('<img></img>')
-    img.attr('src', '/php/get_avatar.php?n='+p.user_name)
-    img.attr('id', 'avatar')
-    img.addClass('img-circle')
-    return img
+function GetPersonInfoHTML(color, music_type) {
+    var box = $('<div></div>')
+    box.addClass = $('marker-container')
+    var marker = $('<img></img>')
+    marker.attr('src', '/img/marker-'+color+'.png')
+    marker.addClass('marker-image')
+    var type = $('<img></img>')
+    type.attr('src', '/img/'+music_type+'.png')
+    type.addClass('music-type-image')
+    box.append(marker)
+    box.append(type)
+    return box
 }
 
 // ui code for info box
@@ -175,7 +180,7 @@ function PlaceUsersNicely(users, log, lat) {
         var finished = 0
         while (1) {
             for (var i=0; i<steps[p]; i++) {
-                var obj = GetPersonInfoHTML(users[cnt])
+                var obj = GetPersonInfoHTML('green', 'guitar')
                 PlaceInfoOnMap(obj, x, y, cnt)
                 x = x + dx[p]
                 y = y + dy[p]
