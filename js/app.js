@@ -3,6 +3,7 @@ var users = {}
 var posts = []
 var markers = []
 var curr_post_index = -1
+var curr_info_marker;
 var map;
 var inDetail = false; // in map or in post
 var curr_zip = 94555
@@ -137,8 +138,18 @@ function GetMarkerInfoHTML(color, music_type) {
 
 // ui code for info box
 function ShowUserInfo() {
+  
+    if (curr_info_marker) { 
+        curr_info_marker.setMap(null)
+    } 
+
     // get position of marker and adjust infowindow's
-    var pos = new google.maps.LatLng(this.position.lat()+0.008, this.position.lng())
+    var dx = map.center.lat() - this.position.lat()
+    var dy = map.center.lng() - this.position.lng()
+    var dist = Math.sqrt(dx*dx+dy*dy)
+    var new_lat = this.position.lat() + dx / dist * 0.015
+    var new_log = this.position.lng() + dy / dist * 0.015
+    var pos = new google.maps.LatLng(new_lat, new_log)
 
     var p = users[this.id]
     var infobox = $('<div></div>')
@@ -149,10 +160,18 @@ function ShowUserInfo() {
     infobox.append(avatar)
     var name = $('<div></div>')
     name.addClass('name-in-infobox')
-    name.text('hello!')
-    infobox.append(p.name)
-    var infowindow = new google.maps.InfoWindow({content: infobox[0].outerHTML, position: pos});
-    infowindow.open(map)
+    name.text(p.name)
+    infobox.append(name)
+    content = infobox[0].outerHTML
+    var marker = new RichMarker({
+        position: pos,
+        map: map,
+        draggable: false,
+        content: content,
+    });
+    marker.setZIndex(5)
+    google.maps.event.addListener(marker, 'click', ShowInteractionPane)
+    curr_info_marker = marker
 }
 
 function PlaceInfoOnMap(obj, x, y, id) {
