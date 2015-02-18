@@ -168,6 +168,7 @@ function ShowUserInfo() {
         map: map,
         draggable: false,
         content: content,
+        id: this.id
     });
     marker.setZIndex(5)
     google.maps.event.addListener(marker, 'click', ShowInteractionPane)
@@ -284,12 +285,14 @@ function InitializePeopleData() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            var ret = JSON.parse(req.responseText)
-            users = ret.users
-            PlaceUsersNicely(users, ret.log, ret.lat)
+            var users = JSON.parse(req.responseText)
+            for (var i in users) {
+                var obj = GetMarkerInfoHTML('green', users[i].type)
+                PlaceInfoOnMap(obj, users[i].lat, users[i].log, users[i].id)
+            }
         }
     }
-    req.open('GET', '/php/get_all_users.php?zip='+curr_zip, true)
+    req.open('GET', '/php/get_all_users.php?lat='+map.center.lat()+'&log='+map.center.lng(), true)
     req.send()
 }
 
