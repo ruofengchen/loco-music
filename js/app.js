@@ -4,6 +4,8 @@ var posts = []
 var markers = []
 var curr_post_index = -1
 var curr_info_marker;
+var curr_district_x;
+var curr_district_y;
 var map;
 var inDetail = false; // in map or in post
 var curr_zip = 94555
@@ -138,7 +140,7 @@ function GetMarkerInfoHTML(color, music_type) {
 
 // ui code for info box
 function ShowUserInfo() {
-  
+
     if (curr_info_marker) { 
         curr_info_marker.setMap(null)
     } 
@@ -237,8 +239,8 @@ function PlaceUsersNicely(users, log, lat) {
 }
 
 function MapMoveAround() {
-    var lat = map.center.lat()
-    var log = map.center.lng()
+    var district_x = (map.center.lat() / 0.1) | 0
+    var district_y = (map.center.lng() / 0.1) | 0
 
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
@@ -253,14 +255,17 @@ function MapMoveAround() {
                 }
                 markers = []
 
-                var ret = JSON.parse(req.responseText)
-                users = ret.users
-                curr_zip = ret.zip
-                PlaceUsersNicely(users, ret.log, ret.lat)
+                users = JSON.parse(req.responseText)
+                for (var i in users) {
+                    var obj = GetMarkerInfoHTML('green', users[i].type)
+                    PlaceInfoOnMap(obj, users[i].lat, users[i].log, users[i].id)
+                    curr_district_x = district_x
+                    curr_district_y = district_y
+                }
             }
         }
     }
-    req.open('GET', '/php/update_area.php?lat='+lat+'&log='+log+'&zipold='+curr_zip, true)
+    req.open('GET', '/php/update_area.php?dx='+district_x+'&dy='+district_y+'&cdx='+curr_district_x+'&cdy='+curr_district_y, true)
     req.send()
 }
 
@@ -285,10 +290,12 @@ function InitializePeopleData() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
-            var users = JSON.parse(req.responseText)
+            users = JSON.parse(req.responseText)
             for (var i in users) {
                 var obj = GetMarkerInfoHTML('green', users[i].type)
                 PlaceInfoOnMap(obj, users[i].lat, users[i].log, users[i].id)
+                curr_district_x = (map.center.lat() / 0.1) | 0
+                curr_district_y = (map.center.lng() / 0.1) | 0
             }
         }
     }

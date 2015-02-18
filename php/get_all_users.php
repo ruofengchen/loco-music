@@ -19,7 +19,7 @@
 
     $users = array();
     while($row = $result->fetch_assoc()){
-        $users[] = $row;
+        $users[$row['id']] = $row;
     }
     echo json_encode($users);
 ?>

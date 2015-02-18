@@ -6,59 +6,32 @@
 
     ini_set('display_errors', 'On');
     error_reporting(E_ALL | E_STRICT);
-    $lat_new = $_GET['lat'];
-    $log_new = $_GET['log'];
-    $zip_old = $_GET['zipold'];
-
-    $username = 'root';
-    $password = 'corvus';
-    $conn = new mysqli('localhost', $username, $password, 'lomus');
-    if($conn->connect_errno > 0){
-        die('Unable to connect to database [' . $conn->connect_error . ']');
+    $district_x = $_GET['dx'];
+    $district_y = $_GET['dy'];
+    $curr_district_x = $_GET['cdx'];
+    $curr_district_y = $_GET['cdy'];
+    if ($district_x == $curr_district_x && $district_y == $curr_district_y) {
+        echo "no need update";
     }
+    else {
 
-    $sql = 'SELECT zipcode, log, lat FROM zipcodes';
-    
-    if(!$result = $conn->query($sql)){
-        die('There was an error running the query [' . $conn->error . ']');
-    }
-
-    $mindist = 99999999;
-    $minzip = 0;
-    while($row = $result->fetch_assoc()){
-        $zip = (int) $row['zipcode'];
-        $log = (float) $row['log'];
-        $lat = (float) $row['lat'];
-        $dist = l2sq($log, $lat, $log_new, $lat_new);
-        if ($dist < $mindist) {
-            $mindist = $dist;
-            $minzip = $zip;
+        $username = 'root';
+        $password = 'corvus';
+        $conn = new mysqli('localhost', $username, $password, 'lomus');
+        if($conn->connect_errno > 0){
+            die('Unable to connect to database [' . $conn->connect_error . ']');
         }
-    }
 
-    if ($minzip != $zip_old) {
 
-        $sql = 'SELECT id, user_name FROM users WHERE zip = ' . $minzip ;
+        $sql = 'SELECT id, name, user_name, log, lat, type FROM users WHERE district_x >= ' . ($district_x-1) . ' AND district_x <= ' . ($district_x+1) . ' AND district_y >= ' . ($district_y-1) . ' AND district_y <= ' . ($district_y+1);
         if(!$result = $conn->query($sql)){
             die('There was an error running the query [' . $conn->error . ']');
         }
 
         $users = array();
         while($row = $result->fetch_assoc()){
-            $users[] = $row;
+            $users[$row['id']] = $row;
         }
-        $sql = 'SELECT log, lat FROM zipcodes WHERE zipcode = ' . $minzip . ' LIMIT 1';
-        if(!$result = $conn->query($sql)){
-            die('There was an error running the query [' . $conn->error . ']');
-        }
-        $row = $result->fetch_assoc();
-        $ret['users'] = $users;
-        $ret['zip'] = $minzip;
-        $ret['log'] = $row['log'];
-        $ret['lat'] = $row['lat'];
-        echo json_encode($ret);
-    }
-    else {
-        echo "no need update";
+        echo json_encode($users);
     }
 ?>
