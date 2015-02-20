@@ -61,7 +61,7 @@ function CommentsReady() {
 function GetPostAndItsComments(post) {
 
     $('#owner-post').text(decodeURIComponent(post.content))
-    $('#soundcloud-box').html('<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=0066cc"></iframe>')        
+    $('#soundcloud-frame').attr('src', "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=0066cc")        
     var req = new XMLHttpRequest()
     req.onreadystatechange = CommentsReady
     req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
