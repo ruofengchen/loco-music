@@ -370,9 +370,33 @@ function InitializeCallback() {
     $('#switch-to-register').click(SwitchToRegister)
 
     function SelectInstrumentsInRegister() {
-        $('#selected-instrument').text($(this).text())
+        $('#selected-instrument').text('Your music instrument is '+$(this).text())
     }
     $('.select-instrument-item').click(SelectInstrumentsInRegister)
+
+    function GetGeo() {
+        if (navigator.geolocation) {
+            
+            function ShowPosition(position) {
+                var lat = position.coords.latitude
+                var log = position.coords.longitude
+                var req = new XMLHttpRequest()
+                req.onreadystatechange = function() {
+                    if (req.readyState == 4 && req.status == 200) {
+                        var geo_struct = JSON.parse(req.responseText)
+                        $('#get-geo-button').text('Your location is '+geo_struct.results[3].formatted_address)
+                    }
+                }
+                req.open('GET', 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+log, true)
+                req.send()
+            }
+            navigator.geolocation.getCurrentPosition(ShowPosition) 
+        }
+        else {
+            console.log('does not support geo')
+        }
+    }
+    $('#get-geo-button').click(GetGeo)
 
     function ShowTaskbar() {
         $('#postbar').hide()
