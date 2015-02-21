@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css?version=1">
+    <link rel="stylesheet" href="/css/style.css?version=3">
+    <link rel="stylesheet" href="/css/star-rating.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="/js/star-rating.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="/lib/richmarker-compiled.js"></script>
     <script src="/js/app.js"></script>
@@ -59,8 +61,14 @@
                     <button class="btn btn-rounded"><span class="glyphicon glyphicon-comment" id="reply-button"></span></button>
                     <button class="btn btn-rounded"><span class="glyphicon glyphicon-flag" id="flag-button"></span></button>
                 </div>
-                <div id="reply-container" class="list-group">
-                    <div id="reply-options-container"></div>
+                <div id="reply-container">
+                    <div id="reply-options-container">
+                        <div class="rating-bar"><div class="breadcrumb rating-label">rhythm</div><input id="star-rating-1" class="stars"></div>
+                        <div class="rating-bar"><div class="breadcrumb rating-label">dynamics</div><input id="star-rating-2" class="stars"></div>
+                        <div class="rating-bar"><div class="breadcrumb rating-label">tone</div><input id="star-rating-3" class="stars"></div>
+                        <div class="rating-bar"><div class="breadcrumb rating-label">techniques</div><input id="star-rating-4" class="stars"></div>
+                        <div class="rating-bar"><div class="breadcrumb rating-label">recording</div><input id="star-rating-5" class="stars"></div>
+                    </div>
                 </div>
                 <div id="comments-container"></div>
             </div>

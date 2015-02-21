@@ -140,6 +140,15 @@ html, body {
     margin: auto;
 }
 
+.rating-bar {
+    display: flex;
+}
+
+.rating-label {
+    background: white;
+    width: 150px;
+}
+
 #comment-box {
     display: flex;
     width:auto;
