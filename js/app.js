@@ -333,6 +333,8 @@ function InitializeCallback() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == 'login failure') {
                     $('#password-textbox').val('')
+                    $('#popup-info').text('Login error. Try again?')
+                    $('#popup-info').show()
                 }
                 else {
                     $('#password-textbox').val('')
