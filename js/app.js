@@ -399,9 +399,24 @@ function InitializeCallback() {
     }
     $('#get-geo-button').click(GetGeo)
 
+    function SwitchToLogin() {
+        $('#login-container').show()
+        $('#register-container').hide()
+    }
+    $('#switch-to-login').click(SwitchToLogin)
+
     function Register() {
-        var s = 'un='+$('#username-textbox-register').val()+'&em='+$('#email-textbox-register').val()+'&pw='+$('#password-textbox-register').val()+'&inst='+$('#selected-instrument').text().substring('Your music instrument is '.length)+$('#geo').text()
-        console.log(s)
+        var s = 'un='+$('#username-textbox-register').val()+'&dn='+$('#name-textbox-register').val()+'&em='+$('#email-textbox-register').val()+'&pw='+$('#password-textbox-register').val()+'&inst='+$('#selected-instrument').text().substring('Your music instrument is '.length)+$('#geo').text()
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (req.responseText == 'register success') {
+                ShowInfo('Congratulations, now you are one of us.')
+                SwitchToLogin()
+            } 
+        }
+
+        req.open('GET', '/php/register.php?'+s)
+        req.send()
     }
     $('#register-button').click(Register)
 
