@@ -10,6 +10,11 @@ var map;
 var inDetail = false; // in map or in post
 var curr_zip = 94555
 
+function ShowInfo(s) {
+    $('#popup-info').show()
+    $('#popup-info').text(s)
+}
+
 function createCookie(name,value,days) {
     if (days) {
         var date = new Date();
@@ -101,8 +106,7 @@ function PostReady() {
         else {
             // nothing to show 
             ClosePane()
-            $('#popup-info').show()
-            $('#popup-info').text(user_data.name+" has not posted anything yet.")
+            ShowInfo(user_data.name+" has not posted anything yet.")
         }
     }
 }
@@ -333,8 +337,7 @@ function InitializeCallback() {
             if (req.readyState == 4 && req.status == 200) {
                 if (req.responseText == 'login failure') {
                     $('#password-textbox').val('')
-                    $('#popup-info').text('Login error. Try again?')
-                    $('#popup-info').show()
+                    ShowInfo('Login error. Try again?')
                 }
                 else {
                     $('#password-textbox').val('')
@@ -345,7 +348,7 @@ function InitializeCallback() {
                     you = JSON.parse(req.responseText)
                     createCookie('token', you.token, 1)
                     $('#name-on-top').text(you.name)
-                    $('#post-on-top').text(you.content)
+                    $('#post-on-top').text(decodeURIComponent(you.content))
                 }
             }
         }
@@ -403,6 +406,7 @@ function InitializeCallback() {
         eraseCookie('token')
         $('#login-container').show()
         $('#taskbar').hide()
+        ShowInfo('Successfully logged out.')
     }
     $('#logout-button').click(Logout)
 }
@@ -420,7 +424,7 @@ function CheckSession() {
                 $('#postbar').show()
                 you = JSON.parse(req.responseText)
                 $('#name-on-top').text(you.name)
-                $('#post-on-top').text(you.content)
+                $('#post-on-top').text(decodeURIComponent(you.content))
             }
         }
     }
