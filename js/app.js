@@ -370,6 +370,12 @@ function InitializeCallback() {
     $('#show-postbar-button').click(ShowPostbar)
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
+    function CenterYou() {
+        map.setCenter(new google.maps.LatLng(parseFloat(you.lat), parseFloat(you.log)))
+        MapMoveAround()        
+    }
+    $('#name-on-top').click(CenterYou)
+
     $('#like-button').attr('src', '/img/heart_grey.png')
     function LikePost() {
         $('#like-button').attr('src', '/img/heart_red.png')

@@ -15,19 +15,17 @@
         }
 
         $uid = $_SESSION[$_COOKIE['token']];    
-        $sql = sprintf('SELECT name FROM users WHERE id = "%s" LIMIT 1', $uid);
+        $sql = sprintf('SELECT id, name, district_x, district_y, lat, log FROM users WHERE id = "%s" LIMIT 1', $uid);
         if(!$result = $conn->query($sql)){
             die('There was an error running the query [' . $conn->error . ']');
         }
-        $row = $result->fetch_assoc();
-        $name = $row['name'];
+        $row1 = $result->fetch_assoc();
         $sql = sprintf('SELECT content FROM posts WHERE author_id = %u LIMIT 1', $uid);
         if(!$result = $conn->query($sql)){
             die('There was an error running the query [' . $conn->error . ']');
         }
-        $row = $result->fetch_assoc();
-        $row['name'] = $name;
-        echo json_encode($row);
+        $row2 = $result->fetch_assoc();
+        echo json_encode(array_merge($row1, $row2));
     }
     else {
         echo 'need login';
