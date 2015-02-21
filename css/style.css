@@ -26,7 +26,13 @@ html, body {
 }
 
 #login-container {
-    display: flex;
+    width: 100%;
+    border-style: solid;
+    border-color: black;
+}
+
+#already-have-account-text {
+   text-align: center; 
 }
 
 #status-bar {
@@ -49,12 +55,16 @@ html, body {
 }
 
 #username-textbox, #password-textbox {
-    margin-right: 5px;
     max-width: 140px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
 
 #login-button {
-    margin: auto;
+    display: block; 
+    max-width: 100px;
+    margin: 0 auto;
 }
 
 .marker-container {

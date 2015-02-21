@@ -14,6 +14,12 @@ function ShowInfo(s) {
     $('#popup-info').text(s)
 }
 
+function KnowGeo(lat, log) {
+    InitializeGoogleMap(lat, log)
+    InitializePeopleData()
+    $('#postbar').show()
+}
+
 function createCookie(name,value,days) {
     if (days) {
         var date = new Date();
@@ -342,12 +348,13 @@ function InitializeCallback() {
                     $('#password-textbox').val('')
                     $('#username-textbox').val('')
 
-                    $('#login-container').hide()
                     $('#postbar').show()
                     you = JSON.parse(req.responseText)
                     createCookie('token', you.token, 1)
                     $('#name-on-top').text(you.name)
                     $('#post-on-top').text(decodeURIComponent(you.content))
+                    $('#startup-pane').hide()
+                    KnowGeo(parseFloat(you.lat), parseFloat(you.log))
                 }
             }
         }
@@ -409,7 +416,6 @@ function InitializeCallback() {
 
     function Logout() {
         eraseCookie('token')
-        $('#login-container').show()
         $('#taskbar').hide()
         ShowInfo('Successfully logged out.')
     }
@@ -422,14 +428,15 @@ function CheckSession() {
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             if (req.responseText == 'need login') {
-                    
+                ShowStartupPane()           
             }
             else {
-                $('#login-container').hide()
                 $('#postbar').show()
                 you = JSON.parse(req.responseText)
                 $('#name-on-top').text(you.name)
-                $('#post-on-top').text(decodeURIComponent(you.content))
+                if (you.content)
+                    $('#post-on-top').text(decodeURIComponent(you.content))
+                KnowGeo(parseFloat(you.lat), parseFloat(you.log))
             }
         }
     }
@@ -450,7 +457,7 @@ function InitializeStarResources() {
 
 }
 
-function AskForGeoPage() {
+function ShowStartupPane() {
     $('#startup-pane').modal({
         show: true,
         backdrop: 'static',
@@ -460,22 +467,12 @@ function AskForGeoPage() {
 
 $(document).ready(function() {
 
-    function knowGeo(lat, log) {
-        InitializeGoogleMap(lat, log)
-        InitializePeopleData()
-    }
 
     function initialize() {
         InitializeCallback()
-        CheckSession()
         InitializeStarResources()
+        CheckSession()
         $('#interaction-pane').hide()
-        if (!you) {
-            AskForGeoPage()
-        }
-        else {
-            KnowGeo(parseFloat(you.lat), parseFloat(you.log))
-        }
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })
