@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css?version=100">
+    <link rel="stylesheet" href="/css/style.css?version=101">
     <link rel="stylesheet" href="/css/star-rating.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -75,10 +75,28 @@
                 <div id="welcome" class="modal-body">
                     <p>Merrit is designed for musician's daily practice life. Here you will find people alike and share the knowledge about how you play.<p>
                     <div id="login-container">
-                        <p id="already-have-account-text">Already have a Merrit account?</p>
                         <input id="username-textbox" type="text" class="form-control" placeholder="Username/E-mail">
                         <input id="password-textbox" type="password" class="form-control" placeholder="Password">
                         <button class="btn btn-default" id="login-button">Sign in</button>
+                        <p id="doesnot-have-account-text">Doesn't have a Merrit account yet? Join <a id="switch-to-register">here</a>.</p>
+                    </div>
+                    <div id="register-container" style="display: none;">
+                        <input id="username-textbox-register" type="text" class="form-control" placeholder="Username">
+                        <input id="email-textbox-register" type="text" class="form-control" placeholder="Email">
+                        <input id="password-textbox-register" type="password" class="form-control" placeholder="Password">
+                        <input id="password-retype-textbox-register" type="password" class="form-control" placeholder="Retype password">
+                        <div class="btn-group btn-input clearfix">
+                            <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" id="select-instrument-register">
+                                <span data-bind="label" id="selected-instrument">What do you play?</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li role="presentation"><a role="menuitem" tabindex="1" href="#" class="select-instrument-item">guitar</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="2" href="#" class="select-instrument-item">piano</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="3" href="#" class="select-instrument-item">vocal</a></li>
+                                <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">More is coming...</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-default" id="register-button">Register</button>
                     </div>
                 </div>
             </div>

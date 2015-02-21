@@ -363,6 +363,17 @@ function InitializeCallback() {
     }
     $('#login-button').click(Login)
 
+    function SwitchToRegister() {
+        $('#login-container').hide()
+        $('#register-container').show()
+    }
+    $('#switch-to-register').click(SwitchToRegister)
+
+    function SelectInstrumentsInRegister() {
+        $('#selected-instrument').text($(this).text())
+    }
+    $('.select-instrument-item').click(SelectInstrumentsInRegister)
+
     function ShowTaskbar() {
         $('#postbar').hide()
         $('#taskbar').show()

@@ -31,8 +31,16 @@ html, body {
     border-color: black;
 }
 
-#already-have-account-text {
-   text-align: center; 
+#doesnot-have-account-text {
+    text-align: center; 
+}
+
+#select-instrument-register {
+    width: 200px;
+}
+
+.select-instrument-item {
+    margin: 0 auto;
 }
 
 #status-bar {
