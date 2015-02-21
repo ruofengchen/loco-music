@@ -8,7 +8,6 @@ var curr_district_x;
 var curr_district_y;
 var map;
 var inDetail = false; // in map or in post
-var curr_zip = 94555
 
 function ShowInfo(s) {
     $('#popup-info').show()
@@ -282,14 +281,14 @@ function MapMoveAround() {
     req.send()
 }
 
-function InitializeGoogleMap() {
+function InitializeGoogleMap(lat, log) {
     var mapOptions = {
         zoom: 13,
         disableDoubleClickZoom: true,
         zoomControl: false,
         mapTypeControl: false,
         streetViewControl: false,
-        center: new google.maps.LatLng(37.5735, -122.0469),
+        center: new google.maps.LatLng(lat, log),
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{featureType:"all", elementType:"labels", stylers:[{visibility:"off"}]}]
     };
@@ -451,14 +450,32 @@ function InitializeStarResources() {
 
 }
 
+function AskForGeoPage() {
+    $('#startup-pane').modal({
+        show: true,
+        backdrop: 'static',
+        keyboard: false
+    })
+}
+
 $(document).ready(function() {
-    function initialize() {
-        InitializeGoogleMap()
+
+    function knowGeo(lat, log) {
+        InitializeGoogleMap(lat, log)
         InitializePeopleData()
+    }
+
+    function initialize() {
         InitializeCallback()
         CheckSession()
         InitializeStarResources()
         $('#interaction-pane').hide()
+        if (!you) {
+            AskForGeoPage()
+        }
+        else {
+            KnowGeo(parseFloat(you.lat), parseFloat(you.log))
+        }
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 })
