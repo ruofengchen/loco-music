@@ -35,6 +35,7 @@
             <button class="btn btn-default"><span class="glyphicon glyphicon-th-large" id="show-taskbar-button"></span></button>
         </div>
     </div>
+    <div class="alert alert-info" id="popup-info" style="display: none;"></div>
     <div id="map-canvas"></div>
     <div class="modal fade" id="interaction-pane" style="display: none;">
         <div class="modal-dialog">
@@ -49,7 +50,7 @@
                     </div>
                     <div id="owner-post-container">
                         <div id="owner-post" class="breadcrumb text-left"></div>
-                        <iframe id="soundcloud-frame"></iframe>
+                        <iframe id="soundcloud-frame" style="display: none;"></iframe>
                     </div>
                     <div id="post-nav-button-container">
                         <button class="btn btn-rounded"><span id="prev-post-button" class="glyphicon glyphicon-chevron-up"></span></button>
@@ -57,12 +58,12 @@
                     </div>
                 </div>
                 <div id="action-bar">
-                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-heart" id="like-button"></span></button>
-                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-comment" id="reply-button"></span></button>
-                    <button class="btn btn-rounded"><span class="glyphicon glyphicon-flag" id="flag-button"></span></button>
+                    <button id="like-button" class="btn btn-rounded"><span class="glyphicon glyphicon-heart"></span></button>
+                    <button id="reply-button" class="btn btn-rounded"><span class="glyphicon glyphicon-comment"></span></button>
+                    <button id="flag-button" class="btn btn-rounded"><span class="glyphicon glyphicon-flag"></span></button>
                 </div>
                 <div id="reply-container">
-                    <div id="reply-options-container">
+                    <div id="reply-options-container" style="display: none;">
                         <div class="rating-bar"><div class="breadcrumb rating-label">rhythm</div><input id="star-rating-1" class="stars"></div>
                         <div class="rating-bar"><div class="breadcrumb rating-label">dynamics</div><input id="star-rating-2" class="stars"></div>
                         <div class="rating-bar"><div class="breadcrumb rating-label">tone</div><input id="star-rating-3" class="stars"></div>

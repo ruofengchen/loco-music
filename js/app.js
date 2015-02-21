@@ -58,10 +58,24 @@ function CommentsReady() {
     }
 }
 
+function ClosePane() {
+    $('#interaction-pane').modal('hide')
+    // remove all dynamically generated contents
+    $('#comments-container').empty()
+    posts = []
+    inDetail = false
+}
+
 function GetPostAndItsComments(post) {
 
     $('#owner-post').text(decodeURIComponent(post.content))
-    $('#soundcloud-frame').attr('src', "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=0066cc")        
+    if (post.sound_url) {
+        $('#soundcloud-frame').attr('src', "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=0066cc")        
+        $('#soundcloud-frame').show()
+    }
+    else {
+        $('#soundcloud-frame').hide()
+    }
     var req = new XMLHttpRequest()
     req.onreadystatechange = CommentsReady
     req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
@@ -71,9 +85,11 @@ function GetPostAndItsComments(post) {
 function PostReady() {
     if (this.readyState == 4 && this.status == 200) {
         var user_data = JSON.parse(this.responseText)
-        console.log(user_data)
         if ('name' in user_data) {
             $('#owner-name').text(user_data.name)
+        }
+        else {
+            return
         }
         if ('posts' in user_data && user_data.posts.length > 0) {
             posts = user_data.posts
@@ -81,6 +97,12 @@ function PostReady() {
                 curr_post_index = posts.length-1
                 GetPostAndItsComments(posts[curr_post_index])
             }
+        }
+        else {
+            // nothing to show 
+            ClosePane()
+            $('#popup-info').show()
+            $('#popup-info').text(user_data.name+" has not posted anything yet.")
         }
     }
 }
@@ -97,7 +119,8 @@ function ShowInteractionPane() {
     $('#owner-post').text('')
 
     $('#flag-confirm').hide()
-
+    
+    $('#soundcloud-frame').hide()
     $('#reply-options-container').hide()
 
     var req = new XMLHttpRequest()
@@ -291,6 +314,11 @@ function InitializePeopleData() {
 
 function InitializeCallback() {
 
+    function DismissAlert() {
+        $('#popup-info').hide()
+    }
+    $('#popup-info').click(DismissAlert)
+
     function ToggleMenu() {
         $('#menu').toggle()
     }
@@ -335,14 +363,6 @@ function InitializeCallback() {
         $('#taskbar').hide()
     }
     $('#show-postbar-button').click(ShowPostbar)
-    function ClosePane() {
-        $('#interaction-pane').modal('hide')
-        // remove all dynamically generated contents
-        $('#reply-options-container').empty()
-        $('#comments-container').empty()
-        posts = []
-        inDetail = false
-    }
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
     $('#like-button').attr('src', '/img/heart_grey.png')

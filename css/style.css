@@ -2,6 +2,15 @@ html, body {
     height: 100%;
 }
 
+#popup-info {
+    position: absolute;
+    top:20%;
+    width: 400px;
+    left: 50%;
+    transform: translateX(-200px);
+    z-index: 100;
+}
+
 #map-canvas {
     width: 100%;
     height: 100%;  
