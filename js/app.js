@@ -380,6 +380,7 @@ function InitializeCallback() {
             function ShowPosition(position) {
                 var lat = position.coords.latitude
                 var log = position.coords.longitude
+                $('#geo').text('&lat='+lat.toString()+'&log='+log.toString())
                 var req = new XMLHttpRequest()
                 req.onreadystatechange = function() {
                     if (req.readyState == 4 && req.status == 200) {
@@ -397,6 +398,12 @@ function InitializeCallback() {
         }
     }
     $('#get-geo-button').click(GetGeo)
+
+    function Register() {
+        var s = 'un='+$('#username-textbox-register').val()+'&em='+$('#email-textbox-register').val()+'&pw='+$('#password-textbox-register').val()+'&inst='+$('#selected-instrument').text().substring('Your music instrument is '.length)+$('#geo').text()
+        console.log(s)
+    }
+    $('#register-button').click(Register)
 
     function ShowTaskbar() {
         $('#postbar').hide()
@@ -501,8 +508,6 @@ function ShowStartupPane() {
 }
 
 $(document).ready(function() {
-
-
     function initialize() {
         InitializeCallback()
         InitializeStarResources()
