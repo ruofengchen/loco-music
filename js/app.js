@@ -165,6 +165,9 @@ function ShowUserInfo() {
     // get position of marker and adjust infowindow's
     var dx = map.center.lat() - this.position.lat()
     var dy = map.center.lng() - this.position.lng()
+    if (dx>-0.00001 && dx<0.00001 && dy>-0.00001 && dy<0.00001) {
+        dx = 0.01
+    }
     var dist = Math.sqrt(dx*dx+dy*dy)
     var new_lat = this.position.lat() + dx / dist * 0.015
     var new_log = this.position.lng() + dy / dist * 0.015
@@ -433,6 +436,11 @@ function InitializeCallback() {
     }
     $('#show-postbar-button').click(ShowPostbar)
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
+
+    function NewPost() {
+        console.log('let us make a new post')
+    }
+    $('#new-post-button').click(NewPost)
 
     function CenterYou() {
         map.setCenter(new google.maps.LatLng(parseFloat(you.lat), parseFloat(you.log)))
