@@ -21,7 +21,7 @@
     $dx = intval(floatval($lat) / $district_res);
     $dy = intval(floatval($log) / $district_res);
 
-    $sql = sprintf('INSERT INTO users (user_name, name, email, district_x, district_y, lat, log, passwd_salt) VALUES ("%s", "%s", "%s", %d, %d, %f, %f, "%s")', $un, $dn, $em, $dx, $dy, $lat, $log, $pw);
+    $sql = sprintf('INSERT INTO users (user_name, name, email, type, district_x, district_y, lat, log, passwd_salt) VALUES ("%s", "%s", "%s", "%s", %d, %d, %f, %f, "%s")', $un, $dn, $em, $inst, $dx, $dy, $lat, $log, $pw);
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }

@@ -350,6 +350,7 @@ function InitializeCallback() {
 
                     $('#postbar').show()
                     you = JSON.parse(req.responseText)
+                    console.log(you)
                     createCookie('token', you.token, 1)
                     $('#name-on-top').text(you.name)
                     $('#post-on-top').text(decodeURIComponent(you.content))

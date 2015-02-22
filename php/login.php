@@ -20,7 +20,7 @@
     if($conn->connect_errno > 0){
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
-    $sql = sprintf('SELECT id, name, district_x, district_y, lat, log, passwd_salt FROM users WHERE user_name = "%s" LIMIT 1', $un);
+    $sql = sprintf('SELECT id, name, user_name, type, district_x, district_y, lat, log, passwd_salt FROM users WHERE user_name = "%s" LIMIT 1', $un);
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }
