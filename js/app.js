@@ -85,6 +85,10 @@ function DisplayUserData(user_data) {
     else {
         $('#soundcloud-frame').hide()
     }
+
+    var rating = (parseFloat(user_data.r0) + parseFloat(user_data.r1) + parseFloat(user_data.r2) + parseFloat(user_data.r3) + parseFloat(user_data.r4)) / 5
+    console.log(rating)
+    $('.stars-display').rating('update', rating)
     //var req = new XMLHttpRequest()
     //req.onreadystatechange = CommentsReady
     //req.open('GET', '/php/get_comments.php?pid=' + p.id, true)
@@ -111,6 +115,7 @@ function ShowInteractionPane() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText)
             var user_data = JSON.parse(this.responseText)
             jQuery.extend(user_data, p)
             user_data.max_version = user_data.version
@@ -537,6 +542,16 @@ function InitializeStarResources() {
         size: 'xs',
         showClear: false,
         showCaption: false
+    });
+    $('.stars-display').rating({
+        min: 0,
+        max: 5,
+        step: 0.1,
+        size: 'xs',
+        showClear: false,
+        showCaption: false,
+        disabled: true,
+        hoverEnabled: false
     });
 
 }
