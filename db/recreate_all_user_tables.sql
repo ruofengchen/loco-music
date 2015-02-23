@@ -12,6 +12,7 @@ CREATE TABLE `users` (
   `log` float(24) NOT NULL,
   `district_x` INT,
   `district_y` INT,
+  `recent_commit_id` INT UNSIGNED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
