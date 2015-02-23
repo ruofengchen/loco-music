@@ -39,7 +39,7 @@ for uid in uids:
         f.write('INSERT INTO commits (author_id, song_id) VALUES (%u, %u);\n' % (uid, songid))
     else:
         f.write('INSERT INTO commits (author_id, song_id, current_version) VALUES (%u, %u, %u);\n' % (uid, songid, num_version - 1))
-    f.write('UPDATE users SET recent_commit_id = %u WHERE uid = %u;\n' % (cid, uid))
+    f.write('UPDATE users SET recent_commit_id = %u WHERE id = %u;\n' % (cid, uid))
     for version in range(num_version):
         content = urllib.quote(random_sentence())
         if random.random() > 0.9:
