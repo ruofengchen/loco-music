@@ -95,24 +95,7 @@ function GetPostAndItsComments(post) {
 function PostReady() {
     if (this.readyState == 4 && this.status == 200) {
         var user_data = JSON.parse(this.responseText)
-        if ('name' in user_data) {
-            $('#owner-name').text(user_data.name)
-        }
-        else {
-            return
-        }
-        if ('posts' in user_data && user_data.posts.length > 0) {
-            posts = user_data.posts
-            if (posts.length > 0) {
-                curr_post_index = posts.length-1
-                GetPostAndItsComments(posts[curr_post_index])
-            }
-        }
-        else {
-            // nothing to show 
-            ClosePane()
-            ShowInfo(user_data.name+" has not posted anything yet.")
-        }
+        console.log(user_data)
     }
 }
 
