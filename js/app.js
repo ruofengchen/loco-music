@@ -115,7 +115,9 @@ function ShowInteractionPane() {
     var req = new XMLHttpRequest()
     req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText)
+            if (this.responseText == 'no posts') {
+                return
+            }
             var user_data = JSON.parse(this.responseText)
             jQuery.extend(user_data, p)
             user_data.max_version = user_data.version

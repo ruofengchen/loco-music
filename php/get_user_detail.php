@@ -13,7 +13,10 @@
         die('There was an error running the query [' . $conn->error . ']');
     }
     $row = $result->fetch_assoc();
-
-    echo json_encode($row);
-
+    if ($row) {
+        echo json_encode($row);
+    }
+    else {
+        echo 'no posts';
+    }
 ?>
