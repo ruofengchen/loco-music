@@ -8,23 +8,12 @@
     if($conn->connect_errno > 0){
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
-    $sql = sprintf('SELECT name FROM users WHERE id = %u LIMIT 1', $uid);
+    $sql = sprintf('SELECT songs.title, songs.artist, s.content, s.sound_url, s.video_url, s.version, s.r0, s.r1, s.r2, s.r3, s.r4, s.updated_at FROM sessions AS s JOIN commits ON s.commit_id = commits.id JOIN songs ON commits.song_id = songs.id WHERE commits.author_id = %u AND s.version = commits.current_version LIMIT 1', $uid);
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }
     $row = $result->fetch_assoc();
-    $user_data = $row;
 
-    $sql = sprintf('SELECT id, content, sound_url, video_url FROM posts WHERE author_id = %u', $uid);
-    if(!$result = $conn->query($sql)){
-        die('There was an error running the query [' . $conn->error . ']');
-    }
-    $posts = array();
-    while($row = $result->fetch_assoc()){
-        $posts[] = $row;
-    }
-
-    $user_data['posts'] = $posts;
-    echo json_encode($user_data);
+    echo json_encode($row);
 
 ?>

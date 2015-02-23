@@ -1,3 +1,0 @@
-USE lomus;
-ALTER TABLE `users` ADD (`zip` INT UNSIGNED NOT NULL);
-

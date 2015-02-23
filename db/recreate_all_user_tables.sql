@@ -29,6 +29,9 @@ CREATE TABLE `rates` (
   `r2` float(24),
   `r3` float(24),
   `r4` float(24),
+  `content` varchar(2048) collate utf8_general_ci,
+  `sound_url` varchar(2048),
+  `video_url` varchar(2048),
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -50,6 +53,7 @@ CREATE TABLE `commits` (
   `id` INT UNSIGNED NOT NULL auto_increment,
   `author_id` INT UNSIGNED NOT NULL,
   `song_id` INT UNSIGNED NOT NULL,
+  `current_version` INT UNSIGNED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -59,8 +63,8 @@ CREATE INDEX author_id_index ON `commits` (author_id);
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `id` INT UNSIGNED NOT NULL auto_increment,
-  `practice_id` INT UNSIGNED NOT NULL,
-  `content` varchar(2048),
+  `commit_id` INT UNSIGNED NOT NULL,
+  `content` varchar(2048) collate utf8_general_ci,
   `sound_url` varchar(2048),
   `video_url` varchar(2048),
   `version` INT UNSIGNED NOT NULL,
@@ -73,7 +77,7 @@ CREATE TABLE `sessions` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
-CREATE INDEX practice_id_index ON `sessions` (practice_id);
+CREATE INDEX commit_id_index ON `sessions` (commit_id);
 
 DROP TABLE IF EXISTS `reviewers`;
 CREATE TABLE `reviewers` (

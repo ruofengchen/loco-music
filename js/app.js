@@ -173,7 +173,6 @@ function ShowUserInfo() {
     var new_log = this.position.lng() + dy / dist * 0.015
     var pos = new google.maps.LatLng(new_lat, new_log)
 
-    console.log(this.id)
     var p = users[this.id]
     var infobox = $('<div></div>')
     infobox.addClass('infobox')
@@ -352,6 +351,7 @@ function InitializeCallback() {
                     $('#username-textbox').val('')
 
                     $('#postbar').show()
+                    console.log(req.responseText)
                     you = JSON.parse(req.responseText)
                     console.log(you)
                     createCookie('token', you.token, 1)
