@@ -20,7 +20,7 @@
             die('There was an error running the query [' . $conn->error . ']');
         }
         $row1 = $result->fetch_assoc();
-        $sql = sprintf('SELECT songs.title, songs.artist, s.content, s.sound_url, s.video_url, s.version, s.r0, s.r1, s.r2, s.r3, s.r4, s.updated_at FROM sessions AS s JOIN commits ON s.commit_id = commits.id JOIN songs ON commits.song_id = songs.id WHERE commits.author_id = %u AND s.version = commits.current_version LIMIT 1', $uid);
+        $sql = sprintf('SELECT songs.title, songs.artist, s.commit_id, s.content, s.sound_url, s.video_url, s.version, s.r0, s.r1, s.r2, s.r3, s.r4, s.updated_at FROM sessions AS s JOIN commits ON s.commit_id = commits.id JOIN songs ON commits.song_id = songs.id WHERE commits.author_id = %u AND s.version = commits.current_version LIMIT 1', $uid);
         if(!$result = $conn->query($sql)){
             die('There was an error running the query [' . $conn->error . ']');
         }

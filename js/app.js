@@ -1,8 +1,7 @@
 var you;
 var users = {}
-var posts = []
 var markers = []
-var curr_post_index = -1
+var curr_user_data;
 var curr_info_marker;
 var curr_district_x;
 var curr_district_y;
@@ -76,27 +75,20 @@ function ClosePane() {
     inDetail = false
 }
 
-function GetPostAndItsComments(post) {
+function DisplayUserData(user_data) {
 
-    $('#owner-post').text(decodeURIComponent(post.content))
-    if (post.sound_url) {
+    $('#owner-post').text(decodeURIComponent(user_data.content))
+    if (user_data.sound_url) {
         $('#soundcloud-frame').attr('src', "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=0066cc")        
         $('#soundcloud-frame').show()
     }
     else {
         $('#soundcloud-frame').hide()
     }
-    var req = new XMLHttpRequest()
-    req.onreadystatechange = CommentsReady
-    req.open('GET', '/php/get_comments.php?pid=' + post.id, true)
-    req.send() 
-}
-
-function PostReady() {
-    if (this.readyState == 4 && this.status == 200) {
-        var user_data = JSON.parse(this.responseText)
-        console.log(user_data)
-    }
+    //var req = new XMLHttpRequest()
+    //req.onreadystatechange = CommentsReady
+    //req.open('GET', '/php/get_comments.php?pid=' + p.id, true)
+    //req.send() 
 }
 
 function ShowInteractionPane() {
@@ -115,12 +107,22 @@ function ShowInteractionPane() {
     $('#soundcloud-frame').hide()
     $('#reply-options-container').hide()
 
+    var p = users[this.id]
     var req = new XMLHttpRequest()
-    req.onreadystatechange = PostReady
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var user_data = JSON.parse(this.responseText)
+            jQuery.extend(user_data, p)
+            user_data.max_version = user_data.version
+            console.log(user_data)
+            DisplayUserData(user_data)
+            curr_user_data = user_data
+        }
+    }
     req.open('GET', '/php/get_user_detail.php?uid=' + this.id, true)
     req.send() 
-    var p = users[this.id]
     $('#owner-avatar').attr('src', '/php/get_avatar.php?n='+p.user_name)
+    $('#owner-name').text(p.name)
 }
 
 // ui code for avatar
@@ -447,19 +449,52 @@ function InitializeCallback() {
     }
     $('#flag-button').click(Flag)
 
+    function UpdateUserData(user_data) {
+        curr_user_data.version = user_data.version
+        curr_user_data.content = user_data.content
+        curr_user_data.sound_url = user_data.sound_url
+        curr_user_data.video_url = user_data.video_url
+        curr_user_data.r0 = user_data.r0
+        curr_user_data.r1 = user_data.r1
+        curr_user_data.r2 = user_data.r2
+        curr_user_data.r3 = user_data.r3
+        curr_user_data.r4 = user_data.r4  
+        DisplayUserData(curr_user_data)
+    }
+
     function PrevPost() {
-        if (curr_post_index > 0) {
-            curr_post_index = curr_post_index - 1
-            GetPostAndItsComments(posts[curr_post_index])
+        if (curr_user_data.version == 0) {
+            return
         }
+        var v = parseFloat(curr_user_data.version) - 1
+        var req = new XMLHttpRequest()
+        
+        req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+                var user_data = JSON.parse(req.responseText)
+                UpdateUserData(user_data)
+            }
+        }
+        req.open('GET', '/php/get_session.php?v='+v+'&c='+curr_user_data.commit_id, true)
+        req.send()
     }
     $('#prev-post-button').click(PrevPost)
 
     function NextPost() {
-        if (curr_post_index != -1 &&curr_post_index < posts.length-1) {
-            curr_post_index = curr_post_index + 1
-            GetPostAndItsComments(posts[curr_post_index])
+        if (curr_user_data.version == curr_user_data.max_version) {
+            return
         }
+        var v = parseFloat(curr_user_data.version) + 1
+        var req = new XMLHttpRequest()
+        
+        req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+                var user_data = JSON.parse(req.responseText)
+                UpdateUserData(user_data)
+            }
+        }
+        req.open('GET', '/php/get_session.php?v='+v+'&c='+curr_user_data.commit_id, true)
+        req.send()
     }
     $('#next-post-button').click(NextPost)
 
