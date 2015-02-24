@@ -27,14 +27,12 @@ for rec in res:
     cvs += [cv]
     f.write('UPDATE users SET recent_commit_id = %u WHERE id = %u;\n' % (cid, uid))
 
-print cids, cvs
-
 for i in range(len(cids)):
     cid = cids[i]
     num_version = cvs[i]
     if not num_version:
         continue
-    for version in range(num_version):
+    for version in range(num_version+1):
         content = urllib.quote(random_sentence())
         if random.random() > 0.9:
             f.write('INSERT INTO sessions (commit_id, content, version) VALUES (%u, "%s", %u);\n' % (cid, content, version))

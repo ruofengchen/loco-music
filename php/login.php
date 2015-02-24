@@ -47,8 +47,12 @@
                 die('There was an error running the query [' . $conn->error . ']');
             }
             $row2 = $result->fetch_assoc();
-            var_dump($recent_commit_id);
-            echo json_encode(array_merge($row1, $row2));
+            if (!$row2) {
+                echo json_encode($row1); // data inconsistent
+            }
+            else {
+                echo json_encode(array_merge($row1, $row2));
+            }
         }
         else {
             echo json_encode($row1);

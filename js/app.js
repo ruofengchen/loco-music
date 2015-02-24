@@ -343,7 +343,6 @@ function InitializeCallback() {
                     $('#username-textbox').val('')
 
                     $('#postbar').show()
-                    console.log(req.responseText)
                     you = JSON.parse(req.responseText)
                     console.log("login:"+JSON.stringify(you))
                     createCookie('token', you.token, 1)
@@ -430,18 +429,21 @@ function InitializeCallback() {
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
     function NewPost() {
-        console.log(you)
         $('#new-post-pane').modal('show')
         $('#new-session-to-recent-commit-button').text(you.recent_commit_id)
     }
     $('#new-post-button').click(NewPost)
 
     function ShowOlderCommits() {
+        console.log(you)
         var req = new XMLHttpRequest()
         req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+                console.log(req.responseText) 
+            }
         }
 
-        req.open('GET', '/php/get_commits.php?'+s)
+        req.open('GET', '/php/get_commits.php?uid='+you.id)
         req.send()
     }
     $('#switch-to-other-commit-button').click(ShowOlderCommits)
