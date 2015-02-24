@@ -429,10 +429,16 @@ function InitializeCallback() {
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
     function NewPost() {
+        console.log(you)
         $('#new-post-pane').modal('show')
-        $('#new-session-to-recent-commit-button').text(you.recent_commit_id)
+        $('#new-session-to-recent-commit-button').text('New Session for '+decodeURIComponent(you.title))
     }
     $('#new-post-button').click(NewPost)
+
+    function NewSessionToRecentCommit() {
+        $('#upload-media-box').show()
+    }
+    $('#new-session-to-recent-commit-button').click(NewSessionToRecentCommit)
 
     function ShowOlderCommits() {
         console.log(you)
@@ -447,6 +453,24 @@ function InitializeCallback() {
         req.send()
     }
     $('#switch-to-other-commit-button').click(ShowOlderCommits)
+
+    // when video is selected/captured
+    function PlayVideoFile() {
+        var file = this.files[0]
+        var type = file.type
+        var videoPlayer = document.getElementById('video-player')
+        if (videoPlayer.canPlayType(type)) {
+            var fileURL = URL.createObjectURL(file);
+            videoPlayer.src = fileURL
+        }
+    }
+    document.getElementById('camera-input').addEventListener('change', PlayVideoFile, false)
+
+    function UploadMedia() {
+        var file = document.getElementById('camera-input').files[0]
+        console.log(file)
+    }
+    $('#upload-media-button').click(UploadMedia)
 
     function CenterYou() {
         map.setCenter(new google.maps.LatLng(parseFloat(you.lat), parseFloat(you.log)))

@@ -34,9 +34,16 @@
     <div class="modal fade" id="new-post-pane" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content" id="new-post-pane-container">
-                <div><button class="btn btn-default" id="new-session-to-recent-commit-button"></button></div>
-                <div><button class="btn btn-default" id="new-commit-button">Start a new commit.</button></div>
-                <div><button class="btn btn-default" id="switch-to-other-commit-button">Work on older commits ...</button></div>
+                <div id="new-session-options-box">
+                    <div><button class="btn btn-default" id="new-session-to-recent-commit-button"></button></div>
+                    <div><button class="btn btn-default" id="new-commit-button">Start a new commit.</button></div>
+                    <div><button class="btn btn-default" id="switch-to-other-commit-button">Work on older commits ...</button></div>
+                </div>
+                <div id="upload-media-box" style="display: none;">
+                    <input type="file" accept="video/*" capture="camcorder" id="camera-input">
+                    <video controls autoplay id="video-player"></video>
+                    <button class="btn btn-default" id="upload-media-button">Upload</button>
+                </div>
             </div>
         </div>
     </div>
