@@ -449,7 +449,7 @@ function InitializeCallback() {
             }
         }
 
-        req.open('GET', '/php/get_commits.php?uid='+you.id)
+        req.open('GET', '/php/get_commits.php?uid='+you.id, true)
         req.send()
     }
     $('#switch-to-other-commit-button').click(ShowOlderCommits)
@@ -469,6 +469,11 @@ function InitializeCallback() {
     function UploadMedia() {
         var file = document.getElementById('camera-input').files[0]
         console.log(file)
+        var formData = new FormData()
+        formData.append('video', file, file.name)
+        var req = new XMLHttpRequest()
+        req.open('POST', '/php/upload_video.php', true)
+        req.send(formData)
     }
     $('#upload-media-button').click(UploadMedia)
 
