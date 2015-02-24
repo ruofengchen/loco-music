@@ -345,7 +345,7 @@ function InitializeCallback() {
                     $('#postbar').show()
                     console.log(req.responseText)
                     you = JSON.parse(req.responseText)
-                    console.log(you)
+                    console.log("login:"+JSON.stringify(you))
                     createCookie('token', you.token, 1)
                     $('#name-on-top').text(you.name)
                     $('#post-on-top').text(decodeURIComponent(you.content))
@@ -430,9 +430,21 @@ function InitializeCallback() {
     $('#interaction-pane').on('hidden.bs.modal', ClosePane)
 
     function NewPost() {
-        console.log('let us make a new post')
+        console.log(you)
+        $('#new-post-pane').modal('show')
+        $('#new-session-to-recent-commit-button').text(you.recent_commit_id)
     }
     $('#new-post-button').click(NewPost)
+
+    function ShowOlderCommits() {
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+        }
+
+        req.open('GET', '/php/get_commits.php?'+s)
+        req.send()
+    }
+    $('#switch-to-other-commit-button').click(ShowOlderCommits)
 
     function CenterYou() {
         map.setCenter(new google.maps.LatLng(parseFloat(you.lat), parseFloat(you.log)))
@@ -524,6 +536,7 @@ function CheckSession() {
             else {
                 $('#postbar').show()
                 you = JSON.parse(req.responseText)
+                console.log("checked session: "+JSON.stringify(you))
                 $('#name-on-top').text(you.name)
                 if (you.content)
                     $('#post-on-top').text(decodeURIComponent(you.content))

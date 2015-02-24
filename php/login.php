@@ -20,7 +20,7 @@
     if($conn->connect_errno > 0){
         die('Unable to connect to database [' . $conn->connect_error . ']');
     }
-    $sql = sprintf('SELECT id, name, user_name, type, district_x, district_y, lat, log, passwd_salt FROM users WHERE user_name = "%s" LIMIT 1', $un);
+    $sql = sprintf('SELECT id, name, user_name, type, district_x, district_y, lat, log, passwd_salt, recent_commit_id FROM users WHERE user_name = "%s" LIMIT 1', $un);
     if(!$result = $conn->query($sql)){
         die('There was an error running the query [' . $conn->error . ']');
     }
@@ -28,13 +28,8 @@
     if(!$row1 || $pw!=$row1['passwd_salt']) {
         echo "login failure";
     } 
-    else {
-        $id = $row1['id'];
-        $sql = sprintf('SELECT songs.title, songs.artist, s.commit_id, s.content, s.sound_url, s.video_url, s.version, s.r0, s.r1, s.r2, s.r3, s.r4, s.updated_at FROM sessions AS s JOIN commits ON s.commit_id = commits.id JOIN songs ON commits.song_id = songs.id WHERE commits.author_id = %u AND s.version = commits.current_version LIMIT 1', $id);
-        if(!$result = $conn->query($sql)){
-            die('There was an error running the query [' . $conn->error . ']');
-        }
-        $row2 = $result->fetch_assoc();
+    else { 
+        unset($row1['passwd_salt']);        
 
         // session
         session_start();
@@ -42,7 +37,20 @@
         while (isset($_SESSION[$randStr])) {
             $randStr = generateRandomString();
         }
-        $_SESSION[$randStr] = $id;
-        $row2['token'] = $randStr;
-        echo json_encode(array_merge($row1, $row2));
+        $_SESSION[$randStr] = $row1['id'];
+        $row1['token'] = $randStr;
+        $recent_commit_id = $row1['recent_commit_id'];
+
+        if ($recent_commit_id) {
+            $sql = sprintf('SELECT songs.title, songs.artist, s.commit_id, s.content, s.sound_url, s.video_url, s.version, s.r0, s.r1, s.r2, s.r3, s.r4, s.updated_at FROM sessions AS s JOIN commits ON s.commit_id = commits.id JOIN songs ON commits.song_id = songs.id WHERE commits.id = %u AND s.version = commits.current_version LIMIT 1', $recent_commit_id);
+            if(!$result = $conn->query($sql)){
+                die('There was an error running the query [' . $conn->error . ']');
+            }
+            $row2 = $result->fetch_assoc();
+            var_dump($recent_commit_id);
+            echo json_encode(array_merge($row1, $row2));
+        }
+        else {
+            echo json_encode($row1);
+        }
     }
