@@ -468,11 +468,18 @@ function InitializeCallback() {
 
     function UploadMedia() {
         var file = document.getElementById('camera-input').files[0]
-        console.log(file)
         var formData = new FormData()
-        formData.append('video', file, file.name)
+        formData.append('video', file)
         var req = new XMLHttpRequest()
-        req.open('POST', '/php/upload_video.php', true)
+        req.onreadystatechange = function() {
+            console.log(req.responseText) 
+        }
+
+        req.upload.addEventListener('progress', function(e){
+            document.getElementById('progress-bar').style.width = Math.ceil(e.loaded/e.total*100) + '%';
+        }, false);
+        var new_version = parseFloat(you.version)+1
+        req.open('POST', '/php/upload_video.php?cid='+you.recent_commit_id+'&v='+new_version)
         req.send(formData)
     }
     $('#upload-media-button').click(UploadMedia)
